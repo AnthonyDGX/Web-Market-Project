@@ -38,8 +38,8 @@ public class CustomerController extends HttpServlet{
                 
 		String action = request.getParameter("action");
 		action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
-		String code = request.getParameter("code");//ce sera pour l'admin controller ajouter des codes ?
-		String taux = request.getParameter("taux");// idem
+		//String code = request.getParameter("code");//ce sera pour l'admin controller ajouter des codes ?
+		//String taux = request.getParameter("taux");// idem
                 //Pour ajouter des commandes
                 String purchaseToCreate =  request.getParameter("purchaseToCreate");
                 String quantite = request.getParameter("quantite");
@@ -58,7 +58,7 @@ public class CustomerController extends HttpServlet{
                         
 			request.setAttribute("codes", viewCodes(request));		
 			switch (action) {
-				case "ADD": // Requête d'ajout (vient du formulaire de saisie)
+				/*case "ADD": // Requête d'ajout (vient du formulaire de saisie)
 					dao.addDiscountCode(code, Float.valueOf(taux));                                 
 					request.setAttribute("message", "Code " + code + " Ajouté");
 					request.setAttribute("codes", viewCodes(request));
@@ -72,7 +72,7 @@ public class CustomerController extends HttpServlet{
 					} catch (SQLIntegrityConstraintViolationException e) {
 						request.setAttribute("message", "Impossible de supprimer " + code + ", ce code est utilisé.");
 					}
-					break;
+					break;*/
                                         
                                 case "ADD_COMMANDE": // Requête d'ajout (vient du formulaire de saisie)
                                     dao.addCommande(Integer.parseInt(password), Integer.parseInt(purchaseToCreate), Integer.parseInt(quantite));
@@ -84,7 +84,7 @@ public class CustomerController extends HttpServlet{
                                 case "DELETE_COMMANDE":
                                     try {
                                             dao.deleteCommande(Integer.parseInt(purchaseToDelete));
-                                            request.setAttribute("message2", "Commande " + purchaseToDelete + " Supprimée");
+                                            request.setAttribute("message", "Commande " + purchaseToDelete + " Supprimée");
                                             session.setAttribute("commandes", dao.customerCommandes(c));
                                             request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
 														
@@ -92,16 +92,17 @@ public class CustomerController extends HttpServlet{
 						request.setAttribute("message2", "Impossible de supprimer " +  purchaseToDelete + ", cette commande est utilisée.");
 					}
                                     break;
+                                    
                                     case "EDIT_COMMANDE":
                                     try {
                                             String quantityToEdit = request.getParameter("quantityToEdit");
                                             dao.editCommande(Integer.parseInt(purchaseToEdit), Integer.parseInt(quantityToEdit));
-                                            request.setAttribute("message2", "Commande " + purchaseToEdit + " modifiée");
+                                            request.setAttribute("message", "Commande " + purchaseToEdit + " modifiée");
                                             session.setAttribute("commandes", dao.customerCommandes(c));
                                             request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
 														
 					} catch (SQLIntegrityConstraintViolationException e) {
-						request.setAttribute("message2", "Impossible de modifier " +  purchaseToEdit + ", cette commande est utilisée.");
+						request.setAttribute("message", "Impossible de modifier " +  purchaseToEdit + ", cette commande est utilisée.");
 					}
                                     break;
                                 

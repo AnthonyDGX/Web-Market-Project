@@ -65,66 +65,38 @@
               <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
             </div>
               
-             <form method='GET' action="customerController">
-                    Code : <input name="code" size="1" maxlength="1" pattern="[A-Z]{1}+" title="Une lettre en MAJUSCULES"><br/>
-		    Taux : <input name="taux" type="number" step="0.01" min="0.0" max="99.99" size="5"><br/>
-			<input type="hidden" name="action" value="ADD">
-			<input type="submit" value="Ajouter">
-            </form>
               
-              <%--  On montre un éventuel message d'erreur --%>
-		<div><h4>${message}</h4></div>
-		<%-- On on montre la liste des discount codes --%>
-              
-            <div>
-                <table border="1">
-                    <tr><th>Code</th><th>Taux</th><th>Action</th></tr>
-                    <c:forEach var="record" items="${codes}">
-                        <tr>
-                            <td>${record.discountCode}</td>
-                            <td><fmt:formatNumber value="${record.rate  / 100}"  type="percent" minFractionDigits="2" minIntegerDigits="2" maxFractionDigits="2" maxIntegerDigits="2"/></td>
-                            <td><a href="?action=DELETE&code=${record.discountCode}">delete</a></td>
-                        </tr>	  		    
-                    </c:forEach>  
-                </table>
-            </div>
-
             <div>               
                     <table border="1">
-                        <tr><th>Numéro du client</th><th>Numéro de Commande</th><th>Qunatité</th></tr>
+                        <tr><th>Numéro du client</th><th>Numéro de Commande</th><th>Quantité</th></tr>
                         <c:forEach var="comm" items="${commandes}">
-                            <tr>
+                            <tr class="input-field">
+                                <form method='GET' action="customerController">
                                 <td >
                                     ${comm.CUSTOMER_ID}                       
                                 </td>
                                 <td>
-                                    ${comm.ORDER_NUM}
-                                  
+                                    <input name="purchaseToEdit" id="${comm.ORDER_NUM}" type="text" class="validate" value="${comm.ORDER_NUM}">                                  
                                 </td>
-                                <td class="input-field">
-                                    <form method='GET' action="customerController">
-                                         <input name="quantityToEdit" id="${comm.QUANTITY}" type="text" class="validate">
-                                         <label class="active" for="${comm.QUANTITY}">${comm.QUANTITY}</label>
-                                         <input type="submit" value="Edit">
-                                     </form>
-              
-                                   
-                                    
+                                <td >
+                                    <input name="quantityToEdit" id="${comm.QUANTITY}" type="text" class="validate" value ="${comm.QUANTITY}">                                   
+                                    <input type="hidden" name="action" value="EDIT_COMMANDE">
+                                      
                                 </td>
                                 <td>
                                     <a href="customerController?action=DELETE_COMMANDE&purchaseToDelete=${comm.ORDER_NUM}">Delete</a>
                                 </td>
                                 <td>
-                                    <a href="customerController?action=EDIT_COMMANDE&purchaseToEdit=${comm.ORDER_NUM}">Edit</a>
+                                    <input type="submit" value="Edit"> 
                                 </td>
-                                
+                                 </form>
                                 
                             </tr>	  		    
                         </c:forEach>  
                     </table>
                 </form
           </div>
-                <div><h4>${message2}</h4></div>
+                <div><h4>${message}</h4></div>
                 
                 
           
