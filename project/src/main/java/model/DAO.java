@@ -144,6 +144,17 @@ public class DAO {
 		return result;
 	}
         
+        public int editCommande(int order_num, int quantity) throws SQLException{
+            int result = 0;
+		String sql = "UPDATE PURCHASE_ORDER SET QUANTITY = ? WHERE ORDER_NUM = ?";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, quantity);
+			stmt.setInt(2, order_num);
+			result = stmt.executeUpdate();
+		}
+		return result;
+        }
         
         
         /* public List<PurchaseOrder> selectCustomerCommande(int customerID)throws SQLException {

@@ -38,12 +38,18 @@ public class CustomerController extends HttpServlet{
                 
 		String action = request.getParameter("action");
 		action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
-		String code = request.getParameter("code");
-		String taux = request.getParameter("taux");
-                String purchasenum =  request.getParameter("num");
+		String code = request.getParameter("code");//ce sera pour l'admin controller ajouter des codes ?
+		String taux = request.getParameter("taux");// idem
+                //Pour ajouter des commandes
+                String purchaseToCreate =  request.getParameter("purchaseToCreate");
+                String quantite = request.getParameter("quantite");
+                // Pour supprimer des commandes
                 String purchaseToDelete = request.getParameter("purchaseToDelete");
                 String password = ((String)session.getAttribute("userPassword"));
-                String quantite = request.getParameter("quantite");
+                //Pour éditer des commandes
+                String purchaseToEdit = request.getParameter("purchaseToEdit");
+                
+               
                 request.setAttribute("codes", viewCodes(request));
 		try {
 			DAO dao = new DAO();
@@ -69,7 +75,7 @@ public class CustomerController extends HttpServlet{
 					break;
                                         
                                 case "ADD_COMMANDE": // Requête d'ajout (vient du formulaire de saisie)
-                                    dao.addCommande(Integer.parseInt(password), Integer.parseInt(purchasenum), Integer.parseInt(quantite));
+                                    dao.addCommande(Integer.parseInt(password), Integer.parseInt(purchaseToCreate), Integer.parseInt(quantite));
                                     
                                     session.setAttribute("commandes", dao.customerCommandes(c));
                                     request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
@@ -86,6 +92,19 @@ public class CustomerController extends HttpServlet{
 						request.setAttribute("message2", "Impossible de supprimer " +  purchaseToDelete + ", cette commande est utilisée.");
 					}
                                     break;
+                                    case "EDIT_COMMANDE":
+                                    try {
+                                            String quantityToEdit = request.getParameter("quantityToEdit");
+                                            dao.editCommande(Integer.parseInt(purchaseToEdit), Integer.parseInt(quantityToEdit));
+                                            request.setAttribute("message2", "Commande " + purchaseToEdit + " modifiée");
+                                            session.setAttribute("commandes", dao.customerCommandes(c));
+                                            request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
+														
+					} catch (SQLIntegrityConstraintViolationException e) {
+						request.setAttribute("message2", "Impossible de modifier " +  purchaseToEdit + ", cette commande est utilisée.");
+					}
+                                    break;
+                                
 			}
 		} catch (Exception ex) {
 			Logger.getLogger("customerController").log(Level.SEVERE, "Action en erreur", ex);

@@ -94,11 +94,29 @@
                         <tr><th>Numéro du client</th><th>Numéro de Commande</th><th>Qunatité</th></tr>
                         <c:forEach var="comm" items="${commandes}">
                             <tr>
-                                <td>${comm.CUSTOMER_ID}</td>
-                                <td>${comm.ORDER_NUM}</td>
-                                <td>${comm.QUANTITY}</td>
-                                <td><a href="?action=DELETE_COMMANDE&purchaseToDelete=${comm.ORDER_NUM}">delete</a></td>
-                                <td><a href="?action=EDIT_COMMANDE&purchaseToEdit=${comm.ORDER_NUM}">Edit</a></td>
+                                <td >
+                                    ${comm.CUSTOMER_ID}                       
+                                </td>
+                                <td>
+                                    ${comm.ORDER_NUM}
+                                  
+                                </td>
+                                <td class="input-field">
+                                    <form method='GET' action="customerController">
+                                         <input name="quantityToEdit" id="${comm.QUANTITY}" type="text" class="validate">
+                                         <label class="active" for="${comm.QUANTITY}">${comm.QUANTITY}</label>
+                                         <input type="submit" value="Edit">
+                                     </form>
+              
+                                   
+                                    
+                                </td>
+                                <td>
+                                    <a href="customerController?action=DELETE_COMMANDE&purchaseToDelete=${comm.ORDER_NUM}">Delete</a>
+                                </td>
+                                <td>
+                                    <a href="customerController?action=EDIT_COMMANDE&purchaseToEdit=${comm.ORDER_NUM}">Edit</a>
+                                </td>
                                 
                                 
                             </tr>	  		    
@@ -109,9 +127,11 @@
                 <div><h4>${message2}</h4></div>
                 
                 
+          
+                
                 
             <form method='GET' action="customerController">
-               Num : <input name="num" size="1" maxlength="100" pattern="{1}+" title="Une lettre en MAJUSCULES"><br/> 
+               Num : <input name="purchaseToCreate" size="1" maxlength="100" pattern="{1}+" title="Une lettre en MAJUSCULES"><br/> 
                Quantité : <input name="quantite" size="1" maxlength="1000" pattern="[A-Z]{1}+" title="Une lettre en MAJUSCULES"><br/>               
                 <input type="hidden" name="action" value="ADD_COMMANDE">
                 <input type="submit" value="Ajouter">
@@ -123,6 +143,6 @@
       </div>
 
     </div>
-
+    
     </body>
 </html>

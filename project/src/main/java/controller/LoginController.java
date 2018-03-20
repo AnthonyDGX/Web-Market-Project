@@ -38,8 +38,7 @@ public class LoginController extends HttpServlet{
 					break;
 				case "logout":
 					doLogout(request);
-					break;
-                                                                
+					break;                                                                
                                 
 			}
 		}
