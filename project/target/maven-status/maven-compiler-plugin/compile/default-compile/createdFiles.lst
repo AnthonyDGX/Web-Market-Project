@@ -6,5 +6,5 @@ controller\CustomerController.class
 model\Customer.class
 model\DiscountCode.class
 model\DataSourceFactory$DriverType.class
-model\DataSourceFactory$1.class
 model\DAO.class
+model\DataSourceFactory$1.class
