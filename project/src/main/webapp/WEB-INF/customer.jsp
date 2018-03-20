@@ -72,25 +72,24 @@
                         <c:forEach var="comm" items="${commandes}">
                             <tr class="input-field">
                                 <form method='GET' action="customerController">
-                                <td >
-                                    ${comm.CUSTOMER_ID}                       
-                                </td>
-                                <td>
-                                    <input name="purchaseToEdit" id="${comm.ORDER_NUM}" type="text" class="validate" value="${comm.ORDER_NUM}">                                  
-                                </td>
-                                <td >
-                                    <input name="quantityToEdit" id="${comm.QUANTITY}" type="text" class="validate" value ="${comm.QUANTITY}">                                   
-                                    <input type="hidden" name="action" value="EDIT_COMMANDE">
-                                      
-                                </td>
-                                <td>
-                                    <a href="customerController?action=DELETE_COMMANDE&purchaseToDelete=${comm.ORDER_NUM}">Delete</a>
-                                </td>
-                                <td>
-                                    <input type="submit" value="Edit"> 
-                                </td>
-                                 </form>
-                                
+                                    <td >
+                                        ${comm.CUSTOMER_ID}                       
+                                    </td>
+                                    <td>
+                                        <input name="purchaseToEdit" id="${comm.ORDER_NUM}" type="text" class="validate" value="${comm.ORDER_NUM}">                                  
+                                    </td>
+                                    <td >
+                                        <input name="quantityToEdit" id="${comm.QUANTITY}" type="text" class="validate" value ="${comm.QUANTITY}">                                   
+                                        <input type="hidden" name="action" value="EDIT_COMMANDE">
+
+                                    </td>
+                                    <td>
+                                        <a href="customerController?action=DELETE_COMMANDE&purchaseToDelete=${comm.ORDER_NUM}">Delete</a>
+                                    </td>
+                                    <td>
+                                        <input type="submit" value="Edit"> 
+                                    </td>
+                                </form>                               
                             </tr>	  		    
                         </c:forEach>  
                     </table>
