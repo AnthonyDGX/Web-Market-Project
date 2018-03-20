@@ -76,7 +76,7 @@
                                         ${comm.CUSTOMER_ID}                       
                                     </td>
                                     <td>
-                                        <input name="purchaseToEdit" id="${comm.ORDER_NUM}" type="text" class="validate" value="${comm.ORDER_NUM}">                                  
+                                        <input disabled name="purchaseToEdit" id="${comm.ORDER_NUM}" type="text" class="validate" value="${comm.ORDER_NUM}">                                  
                                     </td>
                                     <td >
                                         <input name="quantityToEdit" id="${comm.QUANTITY}" type="text" class="validate" value ="${comm.QUANTITY}">                                   
@@ -94,16 +94,12 @@
                         </c:forEach>  
                     </table>
                 </form
-          </div>
-                <div><h4>${message}</h4></div>
-                
-                
-          
-                
-                
+            </div>
+            <div><h4>${message}</h4></div>
+ 
             <form method='GET' action="customerController">
-               Num : <input name="purchaseToCreate" size="1" maxlength="100" pattern="{1}+" title="Une lettre en MAJUSCULES"><br/> 
-               Quantité : <input name="quantite" size="1" maxlength="1000" pattern="[A-Z]{1}+" title="Une lettre en MAJUSCULES"><br/>               
+                Num : <input name="purchaseToCreate" size="1" maxlength="100" pattern="{1}+" title="Une lettre en MAJUSCULES"><br/> 
+                Quantité : <input name="quantite" size="1" maxlength="1000" pattern="[A-Z]{1}+" title="Une lettre en MAJUSCULES"><br/>               
                 <input type="hidden" name="action" value="ADD_COMMANDE">
                 <input type="submit" value="Ajouter">
             </form>
