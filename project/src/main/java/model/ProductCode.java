@@ -25,31 +25,14 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author DGX
  */
-@Entity
-@Table(name = "PRODUCT_CODE")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProductCode.findAll", query = "SELECT p FROM ProductCode p")
-    , @NamedQuery(name = "ProductCode.findByProdCode", query = "SELECT p FROM ProductCode p WHERE p.prodCode = :prodCode")
-    , @NamedQuery(name = "ProductCode.findByDiscountCode", query = "SELECT p FROM ProductCode p WHERE p.discountCode = :discountCode")
-    , @NamedQuery(name = "ProductCode.findByDescription", query = "SELECT p FROM ProductCode p WHERE p.description = :description")})
+
 public class ProductCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2)
-    @Column(name = "PROD_CODE")
     private String prodCode;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "DISCOUNT_CODE")
     private Character discountCode;
-    @Size(max = 10)
-    @Column(name = "DESCRIPTION")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productCode")
+
     private Collection<Product> productCollection;
 
     public ProductCode() {
