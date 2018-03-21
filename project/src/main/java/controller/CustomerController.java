@@ -110,10 +110,7 @@ public class CustomerController extends HttpServlet{
 		} catch (Exception ex) {
 			Logger.getLogger("customerController").log(Level.SEVERE, "Action en erreur", ex);
 			request.setAttribute("message", ex.getMessage());
-		} finally {
-                        
-		}
-		// On continue vers la page JSP sélectionnée
+		} 
 		request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
 
 		// Est-ce que l'utilisateur est connecté ?
