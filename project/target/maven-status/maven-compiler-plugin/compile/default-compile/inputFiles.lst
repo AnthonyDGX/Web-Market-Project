@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\adagneau\Desktop\Web-Market-Project\project\src\main\java\model\DAO.java
 C:\Users\adagneau\Desktop\Web-Market-Project\project\src\main\java\model\ProductCode.java
 C:\Users\adagneau\Desktop\Web-Market-Project\project\src\main\java\model\Manufacturer.java
@@ -10,3 +11,17 @@ C:\Users\adagneau\Desktop\Web-Market-Project\project\src\main\java\model\Product
 C:\Users\adagneau\Desktop\Web-Market-Project\project\src\main\java\controller\AdminController.java
 C:\Users\adagneau\Desktop\Web-Market-Project\project\src\main\java\controller\LoginController.java
 C:\Users\adagneau\Desktop\Web-Market-Project\project\src\main\java\model\MicroMarket.java
+=======
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\controller\CustomerController.java
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\Customer.java
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\DAO.java
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\controller\LoginController.java
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\MicroMarket.java
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\controller\AdminController.java
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\Product.java
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\ProductCode.java
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\Manufacturer.java
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\PurchaseOrder.java
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\DataSourceFactory.java
+C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\DiscountCode.java
+>>>>>>> Sophie
