@@ -18,6 +18,15 @@ public class PurchaseOrder {
     private int QUANTITY;
     private double SHIPPING_COST;
     private String FREIGHT_COMPANY;
+    private String DESCRIPTION;
+
+    public String getDESCRIPTION() {
+        return DESCRIPTION;
+    }
+
+    public void setDESCRIPTION(String DESCRIPTION) {
+        this.DESCRIPTION = DESCRIPTION;
+    }
     
     public PurchaseOrder(int ORDER_NUM, int CUSTOMER_ID, int QUANTITY){
         this.CUSTOMER_ID = CUSTOMER_ID;

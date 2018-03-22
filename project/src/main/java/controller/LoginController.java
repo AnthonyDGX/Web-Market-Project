@@ -129,9 +129,7 @@ public class LoginController extends HttpServlet{
                         session.setAttribute("userPassword", password);
                         session.setAttribute("userAddress", address);
                         session.setAttribute("userPhone", phone);
-                        session.setAttribute("commandes", dao.customerCommandes(c));
-                        
-                        
+                        session.setAttribute("commandes", dao.customerCommandes(c));                                               
                     }
                     else if (login.equals("nodata")){
                         request.setAttribute("errorMessage", "Login/Password incorrect");

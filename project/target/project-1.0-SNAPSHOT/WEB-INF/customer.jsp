@@ -63,7 +63,7 @@
                             </div>
                             <div>               
                                 <table border="1">
-                                    <tr><th>Numéro du client</th><th>Numéro de Commande</th><th>Quantité</th></tr>
+                                    <tr><th>Numéro du client</th><th>Numéro de Commande</th><th>Quantité</th><th>Prix</th><th>Description</th></tr>
                                             <c:forEach var="comm" items="${commandes}">
                                         <tr class="input-field">
                                         <form method='POST' action="customerController">
@@ -77,6 +77,12 @@
                                             <td >
                                                 <input name="quantityToEdit" id="${comm.QUANTITY}" type="text" class="validate" value ="${comm.QUANTITY}">                                   
                                                 <input type="hidden" name="action" value="EDIT_COMMANDE">
+                                            </td>
+                                            <td >
+                                                ${comm.SHIPPING_COST}                                                                                  
+                                            </td>
+                                            <td >
+                                                ${comm.DESCRIPTION}                                                                                  
                                             </td>
                                             <td>
                                                 <a href="customerController?action=DELETE_COMMANDE&purchaseToDelete=${comm.ORDER_NUM}">Delete</a>

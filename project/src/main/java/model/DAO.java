@@ -50,9 +50,11 @@ public class DAO {
         public List<PurchaseOrder> customerCommandes(Customer c) throws SQLException{
             List<PurchaseOrder> result = new LinkedList<>();
             int id = Integer.parseInt(c.getPassword());
-            String sql = "SELECT ORDER_NUM, CUSTOMER_ID, QUANTITY FROM PURCHASE_ORDER"
+            String sql = "SELECT ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY, SHIPPING_COST, DESCRIPTION FROM PURCHASE_ORDER"
                     + " INNER JOIN CUSTOMER"
                     + " USING(CUSTOMER_ID)"
+                    + " INNER JOIN PRODUCT"
+                    + " USING (PRODUCT_ID)"
                     + " WHERE CUSTOMER_ID = ? ";
             try (
                 Connection connection = myDataSource.getConnection();
@@ -63,7 +65,11 @@ public class DAO {
                         int code = rs.getInt("ORDER_NUM");
                         int idCust = rs.getInt("CUSTOMER_ID");
                         int quantity = rs.getInt("QUANTITY");
+                        double cost = rs.getDouble("SHIPPING_COST");
+                        String descritpion = rs.getString("DESCRIPTION");
                         PurchaseOrder po = new PurchaseOrder(code, idCust, quantity);
+                        po.setDESCRIPTION(descritpion);
+                        po.setSHIPPING_COST(cost);
                         result.add(po);
                                                                     
                     }
