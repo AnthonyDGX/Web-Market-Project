@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 
@@ -51,7 +55,7 @@ public class DAO {
         public List<PurchaseOrder> customerCommandes(Customer c) throws SQLException{
             List<PurchaseOrder> result = new LinkedList<>();
             int id = Integer.parseInt(c.getPassword());
-            String sql = "SELECT ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY, SHIPPING_COST, DESCRIPTION FROM PURCHASE_ORDER"
+            String sql = "SELECT ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY, SHIPPING_COST, SHIPPING_DATE, DESCRIPTION FROM PURCHASE_ORDER"
                     + " INNER JOIN CUSTOMER"
                     + " USING(CUSTOMER_ID)"
                     + " INNER JOIN PRODUCT"
@@ -67,11 +71,13 @@ public class DAO {
                         int idCust = rs.getInt("CUSTOMER_ID");
                         int quantity = rs.getInt("QUANTITY");
                         double cost = rs.getDouble("SHIPPING_COST");
+                        Date date = rs.getDate("SHIPPING_DATE");
                         String descritpion = rs.getString("DESCRIPTION");
                         PurchaseOrder po = new PurchaseOrder(code, idCust, quantity);
                         po.setDESCRIPTION(descritpion);
                         System.out.println("ici le prix : "+cost);
                         po.setSHIPPING_COST(cost);
+                        po.setSHIPPING_DATE(date);
                         result.add(po);
                                                                     
                     }
@@ -129,7 +135,7 @@ public class DAO {
         
         public int addCommande(int customerID, int quantity, int product_id) throws SQLException {
 		int result = 0;
-		String sql = "INSERT INTO PURCHASE_ORDER (ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY, SHIPPING_COST) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO PURCHASE_ORDER (ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY, SHIPPING_COST, SHIPPING_DATE) VALUES (?, ?, ?, ?, ?, ?)";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setInt(2, customerID);
@@ -137,6 +143,7 @@ public class DAO {
                         stmt.setInt(3, product_id);
                         stmt.setInt(4, quantity);
                         stmt.setFloat(5, setPrix(quantity, product_id));
+                        stmt.setDate(6, java.sql.Date.valueOf(java.time.LocalDate.now()));
 			result = stmt.executeUpdate();
 		}
 		return result;
