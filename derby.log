@@ -1,7 +1,7 @@
-Tue Mar 27 08:51:32 CEST 2018 : Apache Derby Network Server - 10.11.1.2 - (1629631) démarré et prêt à accepter les connexions sur le port 1527
+Tue Mar 27 22:43:47 CEST 2018 : Apache Derby Network Server - 10.11.1.2 - (1629631) démarré et prêt à accepter les connexions sur le port 1527
 ----------------------------------------------------------------
-Tue Mar 27 08:51:54 CEST 2018:
-Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631) : instance a816c00e-0162-6639-e31c-ffffca282b01 
+Tue Mar 27 22:44:11 CEST 2018:
+Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631) : instance a816c00e-0162-6933-d6dc-ffffca282b01 
 dans le répertoire de base de données C:\Users\DGX\Desktop\Web-Market-Project\sample avec le chargeur de classe sun.misc.Launcher$AppClassLoader@266474c2
 Chargé de file:/C:/Program%20Files/Java/jdk1.8.0_161/db/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -11,5 +11,4 @@ os.name=Windows 10
 os.arch=amd64
 os.version=10.0
 derby.system.home=C:\Users\DGX\Desktop\Web-Market-Project
-Enregistrement de journal incomplet détecté dans le fichier C:\Users\DGX\Desktop\Web-Market-Project\sample\log\log2.dat ; effacement du fichier journal de la position 631 144 jusqu'à la fin du fichier à la position 1 048 576.
 Chargeur de classe de la base de données démarré - derby.database.classpath = ''
