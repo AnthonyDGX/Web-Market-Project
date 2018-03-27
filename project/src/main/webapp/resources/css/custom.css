@@ -2,6 +2,10 @@ html{
   height: 100vh;
 }
 
+.listeProduits{
+    display: block!important;
+    background-color: inherit;
+}
 body {
 width: 100wh;
 color: #fff;
