@@ -44,6 +44,8 @@ public class CustomerController extends HttpServlet{
                 //Pour ajouter des commandes
                // String purchaseToCreate =  request.getParameter("purchaseToCreate");
                 String quantite = request.getParameter("quantite");
+                ArrayList<String> des = dao.allProduct();
+                request.setAttribute("listeProduits", des);
                
                 // Pour supprimer des commandes
                 String purchaseToDelete = request.getParameter("purchaseToDelete");
@@ -78,8 +80,9 @@ public class CustomerController extends HttpServlet{
 					break;*/
                                         
                                 case "ADD_COMMANDE": // Requête d'ajout (vient du formulaire de saisie)
-                                    dao.addCommande(Integer.parseInt(password), Integer.parseInt(quantite));
-                                    dao.numProduct(request.getParameter("produit"));
+                                    dao.addCommande(Integer.parseInt(password), Integer.parseInt(quantite), dao.numProduct(request.getParameter("produit")));
+                                    System.out.println(request.getParameter("produit")+"here eeeeeeeeeeeeeeeee");
+                                    
                                     
                                     session.setAttribute("commandes", dao.customerCommandes(c));
                                     request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);

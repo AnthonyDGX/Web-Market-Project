@@ -70,6 +70,7 @@ public class DAO {
                         String descritpion = rs.getString("DESCRIPTION");
                         PurchaseOrder po = new PurchaseOrder(code, idCust, quantity);
                         po.setDESCRIPTION(descritpion);
+                        System.out.println("ici le prix : "+cost);
                         po.setSHIPPING_COST(cost);
                         result.add(po);
                                                                     
@@ -126,18 +127,35 @@ public class DAO {
 	}
         
         
-        public int addCommande(int customerID, int quantity) throws SQLException {
+        public int addCommande(int customerID, int quantity, int product_id) throws SQLException {
 		int result = 0;
-		String sql = "INSERT INTO PURCHASE_ORDER (ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY) VALUES (?, ?, 980001, ?)";
+		String sql = "INSERT INTO PURCHASE_ORDER (ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY, SHIPPING_COST) VALUES (?, ?, ?, ?, ?)";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setInt(2, customerID);
 			stmt.setInt(1, numeroCommande());
-                        stmt.setInt(3, quantity);
+                        stmt.setInt(3, product_id);
+                        stmt.setInt(4, quantity);
+                        stmt.setFloat(5, setPrix(quantity, product_id));
 			result = stmt.executeUpdate();
 		}
 		return result;
 	}
+        
+        public float setPrix(int quantite, int product_id) throws SQLException{
+            float result = 0;
+		String sql = "SELECT PURCHASE_COST FROM PRODUCT WHERE PRODUCT_ID = ?";
+		  try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, product_id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+                                result = rs.getInt("PURCHASE_COST")*quantite;             
+			}
+		}
+		return result;
+        }
         
         public int numeroCommande() throws SQLException{          
             List<Integer> result = new ArrayList<>();
@@ -176,7 +194,7 @@ public class DAO {
         public int numProduct(String des) throws SQLException {
             int result = 0;
             
-            String sql = "SELECT PRODUCT_ID FROM PRODUCT WHERE DESCRIPTION LIKE '?'";
+            String sql = "SELECT * FROM PRODUCT WHERE DESCRIPTION LIKE ?";
               try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
                         stmt.setString(1, des);
@@ -186,7 +204,7 @@ public class DAO {
                                 result = rs.getInt("PRODUCT_ID");             
 			}
 		}
-              System.out.println("coucou je suis la " + result);
+              System.out.println("Le produit est : "+ result+"----------------------");
             return result;
         }
         
@@ -205,14 +223,33 @@ public class DAO {
         
         public int editCommande(int order_num, int quantity) throws SQLException{
             int result = 0;
-		String sql = "UPDATE PURCHASE_ORDER SET QUANTITY = ? WHERE ORDER_NUM = ?";
+		String sql = "UPDATE PURCHASE_ORDER SET QUANTITY = ?, SHIPPING_COST = ? WHERE ORDER_NUM = ?";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
                         stmt.setInt(1, quantity);
-			stmt.setInt(2, order_num);
+                        stmt.setFloat(2, setPrix(quantity, getProductIdByOrderNum(order_num)));
+			stmt.setInt(3, order_num);
 			result = stmt.executeUpdate();
 		}
 		return result;
+        }
+        
+        public int getProductIdByOrderNum(int order_num)throws SQLException {
+            int result = 0;
+            String sql = "SELECT PRODUCT_ID FROM PRODUCT "
+                    +"INNER JOIN PURCHASE_ORDER "
+                    +"USING (PRODUCT_ID)"
+                    +"WHERE ORDER_NUM = ?";
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, order_num);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				result = rs.getInt("PRODUCT_ID");				
+				                               
+			}
+		}
+            return result;
         }
         
         
