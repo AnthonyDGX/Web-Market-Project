@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -35,24 +36,26 @@ public class CustomerController extends HttpServlet{
 		throws ServletException, IOException, SQLException {
 		// Quelle action a appelé cette servlet ?
                 HttpSession session = request.getSession();
-                
+                DAO dao = new DAO();
 		String action = request.getParameter("action");
 		action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
 		//String code = request.getParameter("code");//ce sera pour l'admin controller ajouter des codes ?
 		//String taux = request.getParameter("taux");// idem
                 //Pour ajouter des commandes
-                String purchaseToCreate =  request.getParameter("purchaseToCreate");
+               // String purchaseToCreate =  request.getParameter("purchaseToCreate");
                 String quantite = request.getParameter("quantite");
+               
                 // Pour supprimer des commandes
                 String purchaseToDelete = request.getParameter("purchaseToDelete");
                 String password = ((String)session.getAttribute("userPassword"));
                 //Pour éditer des commandes
                 String purchaseToEdit = request.getParameter("purchaseToEdit");
                 
+                
                
                 request.setAttribute("codes", viewCodes(request));
 		try {
-			DAO dao = new DAO();
+			
                         Customer c = new Customer();
                         c.setPassword(password);
                         
@@ -75,7 +78,8 @@ public class CustomerController extends HttpServlet{
 					break;*/
                                         
                                 case "ADD_COMMANDE": // Requête d'ajout (vient du formulaire de saisie)
-                                    dao.addCommande(Integer.parseInt(password), Integer.parseInt(purchaseToCreate), Integer.parseInt(quantite));
+                                    dao.addCommande(Integer.parseInt(password), Integer.parseInt(quantite));
+                                    dao.numProduct(request.getParameter("produit"));
                                     
                                     session.setAttribute("commandes", dao.customerCommandes(c));
                                     request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);

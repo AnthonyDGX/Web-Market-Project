@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
@@ -125,18 +126,70 @@ public class DAO {
 	}
         
         
-        public int addCommande(int customerID, int order_num, int quantity) throws SQLException {
+        public int addCommande(int customerID, int quantity) throws SQLException {
 		int result = 0;
 		String sql = "INSERT INTO PURCHASE_ORDER (ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY) VALUES (?, ?, 980001, ?)";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setInt(2, customerID);
-			stmt.setInt(1, order_num);
+			stmt.setInt(1, numeroCommande());
                         stmt.setInt(3, quantity);
 			result = stmt.executeUpdate();
 		}
 		return result;
 	}
+        
+        public int numeroCommande() throws SQLException{          
+            List<Integer> result = new ArrayList<>();
+
+		String sql = "SELECT ORDER_NUM FROM PURCHASE_ORDER";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {                 
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("ORDER_NUM");
+                                result.add(id);				                               
+			}                 
+		}
+                int numAlea = (int) (Math.random()*10000);
+                while(result.contains(numAlea)){
+                    numAlea = (int) (Math.random()*10000);
+                }
+                return numAlea;		
+        }
+        
+        public ArrayList<String> allProduct() throws SQLException {
+		ArrayList<String> result = new ArrayList<>();
+		String sql = "SELECT DESCRIPTION FROM PRODUCT";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                   
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				String des = rs.getString("DESCRIPTION");				
+				result.add(des);                               
+			}
+		}
+		return result;
+	}
+        
+        public int numProduct(String des) throws SQLException {
+            int result = 0;
+            
+            String sql = "SELECT PRODUCT_ID FROM PRODUCT WHERE DESCRIPTION LIKE '?'";
+              try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setString(1, des);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+                                result = rs.getInt("PRODUCT_ID");             
+			}
+		}
+              System.out.println("coucou je suis la " + result);
+            return result;
+        }
+        
         
         
         public int deleteCommande(int order_num) throws SQLException {
@@ -259,6 +312,8 @@ public class DAO {
             
             return ret;
         }
+        
+       
         
         
         
