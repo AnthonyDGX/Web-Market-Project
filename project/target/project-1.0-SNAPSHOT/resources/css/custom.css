@@ -2,6 +2,10 @@ html{
   height: 100vh;
 }
 
+.choixdate{
+    color: black;
+}
+
 .listeProduits{
     display: block!important;
     background-color: inherit;

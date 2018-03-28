@@ -1,8 +1,6 @@
-controller\AdminController.class
 model\PurchaseOrder.class
 controller\CustomerController.class
 model\DiscountCode.class
-model\DAO.class
 model\DataSourceFactory$1.class
 model\ProductCode.class
 model\DataSourceFactory.class
