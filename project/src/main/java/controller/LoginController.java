@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -38,8 +39,7 @@ public class LoginController extends HttpServlet{
 					break;
 				case "logout":
 					doLogout(request);
-					break;
-                                                                
+					break;                                                                
                                 
 			}
 		}
@@ -130,9 +130,9 @@ public class LoginController extends HttpServlet{
                         session.setAttribute("userPassword", password);
                         session.setAttribute("userAddress", address);
                         session.setAttribute("userPhone", phone);
-                        session.setAttribute("commandes", dao.customerCommandes(c));
-                        
-                        
+                        session.setAttribute("commandes", dao.customerCommandes(c));  
+                        ArrayList<String> des = dao.allProduct();
+                        request.setAttribute("listeProduits", des);
                     }
                     else if (login.equals("nodata")){
                         request.setAttribute("errorMessage", "Login/Password incorrect");

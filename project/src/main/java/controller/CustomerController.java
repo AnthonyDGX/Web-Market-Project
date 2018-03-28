@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -35,24 +36,34 @@ public class CustomerController extends HttpServlet{
 		throws ServletException, IOException, SQLException {
 		// Quelle action a appelé cette servlet ?
                 HttpSession session = request.getSession();
-                
+                DAO dao = new DAO();
 		String action = request.getParameter("action");
 		action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
-		String code = request.getParameter("code");
-		String taux = request.getParameter("taux");
-                String purchasenum =  request.getParameter("num");
+		//String code = request.getParameter("code");//ce sera pour l'admin controller ajouter des codes ?
+		//String taux = request.getParameter("taux");// idem
+                //Pour ajouter des commandes
+               // String purchaseToCreate =  request.getParameter("purchaseToCreate");
+                String quantite = request.getParameter("quantite");
+                ArrayList<String> des = dao.allProduct();
+                request.setAttribute("listeProduits", des);
+               
+                // Pour supprimer des commandes
                 String purchaseToDelete = request.getParameter("purchaseToDelete");
                 String password = ((String)session.getAttribute("userPassword"));
-                String quantite = request.getParameter("quantite");
+                //Pour éditer des commandes
+                String purchaseToEdit = request.getParameter("purchaseToEdit");
+                
+                
+               
                 request.setAttribute("codes", viewCodes(request));
 		try {
-			DAO dao = new DAO();
+			
                         Customer c = new Customer();
                         c.setPassword(password);
                         
 			request.setAttribute("codes", viewCodes(request));		
 			switch (action) {
-				case "ADD": // Requête d'ajout (vient du formulaire de saisie)
+				/*case "ADD": // Requête d'ajout (vient du formulaire de saisie)
 					dao.addDiscountCode(code, Float.valueOf(taux));                                 
 					request.setAttribute("message", "Code " + code + " Ajouté");
 					request.setAttribute("codes", viewCodes(request));
@@ -66,10 +77,12 @@ public class CustomerController extends HttpServlet{
 					} catch (SQLIntegrityConstraintViolationException e) {
 						request.setAttribute("message", "Impossible de supprimer " + code + ", ce code est utilisé.");
 					}
-					break;
+					break;*/
                                         
                                 case "ADD_COMMANDE": // Requête d'ajout (vient du formulaire de saisie)
-                                    dao.addCommande(Integer.parseInt(password), Integer.parseInt(purchasenum), Integer.parseInt(quantite));
+                                    dao.addCommande(Integer.parseInt(password), Integer.parseInt(quantite), dao.numProduct(request.getParameter("produit")));
+                                    System.out.println(request.getParameter("produit")+"here eeeeeeeeeeeeeeeee");
+                                    
                                     
                                     session.setAttribute("commandes", dao.customerCommandes(c));
                                     request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
@@ -78,7 +91,7 @@ public class CustomerController extends HttpServlet{
                                 case "DELETE_COMMANDE":
                                     try {
                                             dao.deleteCommande(Integer.parseInt(purchaseToDelete));
-                                            request.setAttribute("message2", "Commande " + purchaseToDelete + " Supprimée");
+                                            request.setAttribute("message", "Commande " + purchaseToDelete + " Supprimée");
                                             session.setAttribute("commandes", dao.customerCommandes(c));
                                             request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
 														
@@ -86,14 +99,25 @@ public class CustomerController extends HttpServlet{
 						request.setAttribute("message2", "Impossible de supprimer " +  purchaseToDelete + ", cette commande est utilisée.");
 					}
                                     break;
+                                    
+                                    case "EDIT_COMMANDE":
+                                    try {
+                                            String quantityToEdit = request.getParameter("quantityToEdit");
+                                            dao.editCommande(Integer.parseInt(purchaseToEdit), Integer.parseInt(quantityToEdit), Integer.parseInt(password) );
+                                            request.setAttribute("message", "Commande " + purchaseToEdit + " modifiée");
+                                            session.setAttribute("commandes", dao.customerCommandes(c));
+                                            request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
+														
+					} catch (SQLIntegrityConstraintViolationException e) {
+						request.setAttribute("message", "Impossible de modifier " +  purchaseToEdit + ", cette commande est utilisée.");
+					}
+                                    break;
+                                
 			}
 		} catch (Exception ex) {
 			Logger.getLogger("customerController").log(Level.SEVERE, "Action en erreur", ex);
 			request.setAttribute("message", ex.getMessage());
-		} finally {
-                        
-		}
-		// On continue vers la page JSP sélectionnée
+		} 
 		request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
 
 		// Est-ce que l'utilisateur est connecté ?
