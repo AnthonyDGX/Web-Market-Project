@@ -39,8 +39,6 @@ public class CustomerController extends HttpServlet{
                 DAO dao = new DAO();
 		String action = request.getParameter("action");
 		action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
-		//String code = request.getParameter("code");//ce sera pour l'admin controller ajouter des codes ?
-		//String taux = request.getParameter("taux");// idem
                 //Pour ajouter des commandes
                // String purchaseToCreate =  request.getParameter("purchaseToCreate");
                 String quantite = request.getParameter("quantite");
@@ -63,21 +61,7 @@ public class CustomerController extends HttpServlet{
                         
 			request.setAttribute("codes", viewCodes(request));		
 			switch (action) {
-				/*case "ADD": // Requête d'ajout (vient du formulaire de saisie)
-					dao.addDiscountCode(code, Float.valueOf(taux));                                 
-					request.setAttribute("message", "Code " + code + " Ajouté");
-					request.setAttribute("codes", viewCodes(request));
-                                        request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
-					break;
-				case "DELETE": // Requête de suppression (vient du lien hypertexte)
-					try {
-						dao.deleteDiscountCode(code);
-						request.setAttribute("message", "Code " + code + " Supprimé");
-														
-					} catch (SQLIntegrityConstraintViolationException e) {
-						request.setAttribute("message", "Impossible de supprimer " + code + ", ce code est utilisé.");
-					}
-					break;*/
+				
                                         
                                 case "ADD_COMMANDE": // Requête d'ajout (vient du formulaire de saisie)
                                     dao.addCommande(Integer.parseInt(password), Integer.parseInt(quantite), dao.numProduct(request.getParameter("produit")));

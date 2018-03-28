@@ -378,6 +378,27 @@ public class DAO {
             return ret;
         }
         
+        // Partie Admin
+        
+        public double chiffreAffaireByProduct(int product, Date deb, Date fin) throws SQLException {
+            double ret = 0;
+            String sql ="SELECT * FROM PURCHASE_ORDER WHERE PRODUCT_ID = ? AND SHIPPING_DATE BETWEEN ? AND ? ";
+            
+            
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, product);
+                        stmt.setDate(2, (java.sql.Date) deb);
+                        stmt.setDate(3, (java.sql.Date) fin);
+                        
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				ret = rs.getInt("PRODUCT_ID");								                               
+			}
+		}
+            System.out.println("Le Ca est de ------------------------------------------------------------------ "+ ret);
+            return ret;
+        }
        
         
         
