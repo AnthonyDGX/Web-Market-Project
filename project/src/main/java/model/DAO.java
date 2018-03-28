@@ -112,6 +112,27 @@ public class DAO {
 		}
 		return result;
 	}
+        
+        public double valueOfDiscountCode(int customer_id) throws SQLException {
+            double ret = 0;
+            String sql = "SELECT RATE FROM DISCOUNT_CODE"
+                    +" INNER JOIN CUSTOMER"
+                    +" USING (DISCOUNT_CODE)"
+                    +" WHERE CUSTOMER_ID = ?";
+            
+            		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, customer_id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+				double rate = rs.getDouble("RATE");
+				ret = rate;				
+			}
+		}     
+            System.out.println("ma valeur est de  -----------------------"+ ret);
+            return ret;
+        }
 
 	/**
 	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE
@@ -142,15 +163,15 @@ public class DAO {
 			stmt.setInt(1, numeroCommande());
                         stmt.setInt(3, product_id);
                         stmt.setInt(4, quantity);
-                        stmt.setFloat(5, setPrix(quantity, product_id));
+                        stmt.setDouble(5, setPrix(quantity, product_id, customerID));
                         stmt.setDate(6, java.sql.Date.valueOf(java.time.LocalDate.now()));
 			result = stmt.executeUpdate();
 		}
 		return result;
 	}
         
-        public float setPrix(int quantite, int product_id) throws SQLException{
-            float result = 0;
+        public double setPrix(int quantite, int product_id, int customer_id) throws SQLException{
+            double result = 0;
 		String sql = "SELECT PURCHASE_COST FROM PRODUCT WHERE PRODUCT_ID = ?";
 		  try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -158,7 +179,7 @@ public class DAO {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				
-                                result = rs.getInt("PURCHASE_COST")*quantite;             
+                                result = (rs.getInt("PURCHASE_COST")*quantite)*((100-valueOfDiscountCode(customer_id))/100);             
 			}
 		}
 		return result;
@@ -228,13 +249,13 @@ public class DAO {
 		return result;
 	}
         
-        public int editCommande(int order_num, int quantity) throws SQLException{
+        public int editCommande(int order_num, int quantity, int customerID) throws SQLException{
             int result = 0;
 		String sql = "UPDATE PURCHASE_ORDER SET QUANTITY = ?, SHIPPING_COST = ? WHERE ORDER_NUM = ?";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
                         stmt.setInt(1, quantity);
-                        stmt.setFloat(2, setPrix(quantity, getProductIdByOrderNum(order_num)));
+                        stmt.setDouble(2, setPrix(quantity, getProductIdByOrderNum(order_num), customerID));
 			stmt.setInt(3, order_num);
 			result = stmt.executeUpdate();
 		}

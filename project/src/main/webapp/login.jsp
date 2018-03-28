@@ -45,7 +45,7 @@
                       <div class="row">
                         <div class="input-field offset-s1 col s10 log-style">
                           <i class="material-icons prefix">account_circle</i>
-                          <input name='loginParam' id="email" class="validate log-style" type="email">
+                          <input name='loginParam' id="email" class="validate log-style" type="text">
                           <label for="email">Email</label>
                         </div>
                       </div>
