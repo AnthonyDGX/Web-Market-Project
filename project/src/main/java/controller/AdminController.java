@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,6 +30,11 @@ public class AdminController extends HttpServlet{
 		throws ServletException, IOException, SQLException {
 		// Quelle action a appelé cette servlet ?
 		String action = request.getParameter("action");
+                
+                DAO dao = new DAO();
+                
+                ArrayList<String> des = dao.allProduct();
+                request.setAttribute("listeProduits", des);
 		if (null != action) {
 			switch (action) {
 				
