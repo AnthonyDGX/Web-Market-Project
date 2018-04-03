@@ -12,6 +12,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 
@@ -378,25 +380,43 @@ public class DAO {
             return ret;
         }
         
-        // Partie Admin
-        
-        public double chiffreAffaireByProduct(int product, Date deb, Date fin) throws SQLException {
-            double ret = 0;
-            String sql ="SELECT * FROM PURCHASE_ORDER WHERE PRODUCT_ID = ? AND SHIPPING_DATE BETWEEN ? AND ? ";
-            
-            
+            public String descProduct(int product_id) throws SQLException{
+            String ret = "";
+            String sql = "SELECT DESCRITPION FROM PRODUCT WHERE PRODUCT_ID = ?";
             try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setInt(1, product);
-                        stmt.setDate(2, (java.sql.Date) deb);
-                        stmt.setDate(3, (java.sql.Date) fin);
+                        stmt.setInt(1, product_id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				ret = rs.getString("DESCRITPION");
+                            
+			}
+		}
+            
+            return ret;
+        }
+        
+        // Partie Admin
+        
+        public Map<String,Double> chiffreAffaireByProduct(Date deb, Date fin) throws SQLException {
+            Map<String,Double> ret = new HashMap<>();
+            String sql ="SELECT PRODUCT_ID, SUM(SHIPPING_COST) AS SALES FROM PURCHASE_ORDER WHERE SHIPPING_DATE BETWEEN ? AND ? "
+                    + "GROUP BY PRODUCT_ID";                        
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        
+                        stmt.setDate(1, (java.sql.Date) deb);
+                        stmt.setDate(2, (java.sql.Date) fin);
                         
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				ret = rs.getInt("PRODUCT_ID");								                               
+                            String product = descProduct(rs.getInt("PRODUCT_ID"));
+                            double price = rs.getDouble("SALES");
+                            ret.put(product, price);
+                            System.out.println("Le Ca est de ------------------------------------------------------------------ "+ price);
 			}
 		}
-            System.out.println("Le Ca est de ------------------------------------------------------------------ "+ ret);
+            
             return ret;
         }
        

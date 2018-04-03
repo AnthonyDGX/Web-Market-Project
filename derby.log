@@ -12,3 +12,9 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=C:\Users\DGX\Desktop\Web-Market-Project
 Chargeur de classe de la base de données démarré - derby.database.classpath = ''
+----------------------------------------------------------------
+Mon Apr 02 17:42:09 CEST 2018 : fermeture du moteur Derby
+----------------------------------------------------------------
+Mon Apr 02 17:42:09 CEST 2018:
+Fermeture de l'instance a816c00e-0162-86dd-f802-ffffca282b01 sur le répertoire de base de données C:\Users\DGX\Desktop\Web-Market-Project\sample avec le chargeur de classe sun.misc.Launcher$AppClassLoader@266474c2 
+----------------------------------------------------------------
