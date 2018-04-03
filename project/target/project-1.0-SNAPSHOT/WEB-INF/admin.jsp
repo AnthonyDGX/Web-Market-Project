@@ -28,8 +28,15 @@
             <input type='submit' name='action' value='nom'>
         </form>
         
-         <input type="date" class="choixdate" name="date_debut">
-         <input type="date" class="choixdate" name="date_fin">
+         
+         
+         <form method='GET' action="adminController">
+            Quantité : <input name="quantite" size="1" maxlength="1000" pattern="[A-Z]{1}+" title="Une lettre en MAJUSCULES"><br/>
+            <input type="date" class="choixdate" name="date_debut">
+            <input type="date" class="choixdate" name="date_fin">
+            <input type="hidden" name="action" value="caByProduct">
+            <input type="submit" value="Afficher">
+        </form>
           <script type="text/javascript" src="resources/js/materialize.min.js"></script>  
    
 

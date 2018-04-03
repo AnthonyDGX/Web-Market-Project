@@ -65,9 +65,6 @@ public class CustomerController extends HttpServlet{
                                         
                                 case "ADD_COMMANDE": // Requête d'ajout (vient du formulaire de saisie)
                                     dao.addCommande(Integer.parseInt(password), Integer.parseInt(quantite), dao.numProduct(request.getParameter("produit")));
-                                    System.out.println(request.getParameter("produit")+"here eeeeeeeeeeeeeeeee");
-                                    
-                                    
                                     session.setAttribute("commandes", dao.customerCommandes(c));
                                     request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
                                     break;
