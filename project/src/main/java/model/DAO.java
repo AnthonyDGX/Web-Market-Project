@@ -4,9 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 
@@ -50,9 +57,11 @@ public class DAO {
         public List<PurchaseOrder> customerCommandes(Customer c) throws SQLException{
             List<PurchaseOrder> result = new LinkedList<>();
             int id = Integer.parseInt(c.getPassword());
-            String sql = "SELECT ORDER_NUM, CUSTOMER_ID, QUANTITY FROM PURCHASE_ORDER"
+            String sql = "SELECT ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY, SHIPPING_COST, SHIPPING_DATE, DESCRIPTION FROM PURCHASE_ORDER"
                     + " INNER JOIN CUSTOMER"
                     + " USING(CUSTOMER_ID)"
+                    + " INNER JOIN PRODUCT"
+                    + " USING (PRODUCT_ID)"
                     + " WHERE CUSTOMER_ID = ? ";
             try (
                 Connection connection = myDataSource.getConnection();
@@ -63,7 +72,14 @@ public class DAO {
                         int code = rs.getInt("ORDER_NUM");
                         int idCust = rs.getInt("CUSTOMER_ID");
                         int quantity = rs.getInt("QUANTITY");
+                        double cost = rs.getDouble("SHIPPING_COST");
+                        Date date = rs.getDate("SHIPPING_DATE");
+                        String descritpion = rs.getString("DESCRIPTION");
                         PurchaseOrder po = new PurchaseOrder(code, idCust, quantity);
+                        po.setDESCRIPTION(descritpion);
+                        System.out.println("ici le prix : "+cost);
+                        po.setSHIPPING_COST(cost);
+                        po.setSHIPPING_DATE(date);
                         result.add(po);
                                                                     
                     }
@@ -98,6 +114,27 @@ public class DAO {
 		}
 		return result;
 	}
+        
+        public double valueOfDiscountCode(int customer_id) throws SQLException {
+            double ret = 0;
+            String sql = "SELECT RATE FROM DISCOUNT_CODE"
+                    +" INNER JOIN CUSTOMER"
+                    +" USING (DISCOUNT_CODE)"
+                    +" WHERE CUSTOMER_ID = ?";
+            
+            		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, customer_id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+				double rate = rs.getDouble("RATE");
+				ret = rate;				
+			}
+		}     
+            System.out.println("ma valeur est de  -----------------------"+ ret);
+            return ret;
+        }
 
 	/**
 	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE
@@ -119,18 +156,88 @@ public class DAO {
 	}
         
         
-        public int addCommande(int customerID, int order_num, int quantity) throws SQLException {
+        public int addCommande(int customerID, int quantity, int product_id) throws SQLException {
 		int result = 0;
-		String sql = "INSERT INTO PURCHASE_ORDER (ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY) VALUES (?, ?, 980001, ?)";
+		String sql = "INSERT INTO PURCHASE_ORDER (ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY, SHIPPING_COST, SHIPPING_DATE) VALUES (?, ?, ?, ?, ?, ?)";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setInt(2, customerID);
-			stmt.setInt(1, order_num);
-                        stmt.setInt(3, quantity);
+			stmt.setInt(1, numeroCommande());
+                        stmt.setInt(3, product_id);
+                        stmt.setInt(4, quantity);
+                        stmt.setDouble(5, setPrix(quantity, product_id, customerID));
+                        stmt.setDate(6, java.sql.Date.valueOf(java.time.LocalDate.now()));
 			result = stmt.executeUpdate();
 		}
 		return result;
 	}
+        
+        public double setPrix(int quantite, int product_id, int customer_id) throws SQLException{
+            double result = 0;
+		String sql = "SELECT PURCHASE_COST FROM PRODUCT WHERE PRODUCT_ID = ?";
+		  try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, product_id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+                                result = (rs.getInt("PURCHASE_COST")*quantite)*((100-valueOfDiscountCode(customer_id))/100);             
+			}
+		}
+		return result;
+        }
+        
+        public int numeroCommande() throws SQLException{          
+            List<Integer> result = new ArrayList<>();
+
+		String sql = "SELECT ORDER_NUM FROM PURCHASE_ORDER";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {                 
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("ORDER_NUM");
+                                result.add(id);				                               
+			}                 
+		}
+                int numAlea = (int) (Math.random()*10000);
+                while(result.contains(numAlea)){
+                    numAlea = (int) (Math.random()*10000);
+                }
+                return numAlea;		
+        }
+        
+        public ArrayList<String> allProduct() throws SQLException {
+		ArrayList<String> result = new ArrayList<>();
+		String sql = "SELECT DESCRIPTION FROM PRODUCT";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                   
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				String des = rs.getString("DESCRIPTION");				
+				result.add(des);                               
+			}
+		}
+		return result;
+	}
+        
+        public int numProduct(String des) throws SQLException {
+            int result = 0;
+            
+            String sql = "SELECT * FROM PRODUCT WHERE DESCRIPTION LIKE ?";
+              try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setString(1, des);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+                                result = rs.getInt("PRODUCT_ID");             
+			}
+		}
+              System.out.println("Le produit est : "+ result+"----------------------");
+            return result;
+        }
+        
         
         
         public int deleteCommande(int order_num) throws SQLException {
@@ -144,16 +251,35 @@ public class DAO {
 		return result;
 	}
         
-        public int editCommande(int order_num, int quantity) throws SQLException{
+        public int editCommande(int order_num, int quantity, int customerID) throws SQLException{
             int result = 0;
-		String sql = "UPDATE PURCHASE_ORDER SET QUANTITY = ? WHERE ORDER_NUM = ?";
+		String sql = "UPDATE PURCHASE_ORDER SET QUANTITY = ?, SHIPPING_COST = ? WHERE ORDER_NUM = ?";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
                         stmt.setInt(1, quantity);
-			stmt.setInt(2, order_num);
+                        stmt.setDouble(2, setPrix(quantity, getProductIdByOrderNum(order_num), customerID));
+			stmt.setInt(3, order_num);
 			result = stmt.executeUpdate();
 		}
 		return result;
+        }
+        
+        public int getProductIdByOrderNum(int order_num)throws SQLException {
+            int result = 0;
+            String sql = "SELECT PRODUCT_ID FROM PRODUCT "
+                    +"INNER JOIN PURCHASE_ORDER "
+                    +"USING (PRODUCT_ID)"
+                    +"WHERE ORDER_NUM = ?";
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, order_num);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				result = rs.getInt("PRODUCT_ID");				
+				                               
+			}
+		}
+            return result;
         }
         
         
@@ -253,6 +379,47 @@ public class DAO {
             
             return ret;
         }
+        
+            public String descProduct(int product_id) throws SQLException{
+            String ret = "";
+            String sql = "SELECT DESCRITPION FROM PRODUCT WHERE PRODUCT_ID = ?";
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, product_id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				ret = rs.getString("DESCRITPION");
+                            
+			}
+		}
+            
+            return ret;
+        }
+        
+        // Partie Admin
+        
+        public Map<String,Double> chiffreAffaireByProduct(Date deb, Date fin) throws SQLException {
+            Map<String,Double> ret = new HashMap<>();
+            String sql ="SELECT PRODUCT_ID, SUM(SHIPPING_COST) AS SALES FROM PURCHASE_ORDER WHERE SHIPPING_DATE BETWEEN ? AND ? "
+                    + "GROUP BY PRODUCT_ID";                        
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        
+                        stmt.setDate(1, (java.sql.Date) deb);
+                        stmt.setDate(2, (java.sql.Date) fin);
+                        
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+                            String product = descProduct(rs.getInt("PRODUCT_ID"));
+                            double price = rs.getDouble("SALES");
+                            ret.put(product, price);
+                            System.out.println("Le Ca est de ------------------------------------------------------------------ "+ price);
+			}
+		}
+            
+            return ret;
+        }
+       
         
         
         

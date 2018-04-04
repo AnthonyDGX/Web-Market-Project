@@ -1,5 +1,5 @@
 function langueAleatoire(){
-	let tLangue=["Bonjour","Hello","Bongiorno","Hallo","Hola","	你好"];
+	let tLangue=["Bienvenue","Welcome","Benvenuti","Willkommen","Bienvenidos","欢迎"];
 	var langue = tLangue[Math.floor(Math.random()*tLangue.length)];
 	return langue;
 }
