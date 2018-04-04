@@ -15,10 +15,11 @@
         <link rel="stylesheet" type="text/css" href="resources/css/custom.css">
         <link rel="stylesheet" type="text/css" href="resources/css/materialize.css">
         <link rel="stylesheet" type="text/css" href="resources/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
                
 
     </head>
-    <body>
+    <body class="pageAdmin">
         <h1>Hello Admin!</h1>
         
         <form action="LoginController" method="POST"> 
@@ -38,12 +39,15 @@
             <input type="submit" value="Afficher">
         </form>
         
-        <c:forEach var="item" items="${productCA}">
-            product: <bean:write name="ca" property="key"/>
-            Ca: <bean:write name="ca" property="value"/>
+                
+        <c:forEach items="${productCA}" var="item" >
+            <p class="produit" value="${item.key}">Produit = ${item.key}</p>
+            <p class="ca" value="${item.value}">CA = ${item.value}€</p>
         </c:forEach>
+            
+       
           <script type="text/javascript" src="resources/js/materialize.min.js"></script>  
+          
    
-
     </body>
 </html>
