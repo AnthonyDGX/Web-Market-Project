@@ -15,7 +15,6 @@
         <link rel="stylesheet" type="text/css" href="resources/css/custom.css">
         <link rel="stylesheet" type="text/css" href="resources/css/materialize.css">
         <link rel="stylesheet" type="text/css" href="resources/css/materialize.min.css">
-
     </head>
     <body>
 
@@ -63,7 +62,7 @@
                             </div>
                             <div>               
                                 <table border="1">
-                                    <tr><th>Numéro du client</th><th>Numéro de Commande</th><th>Quantité</th><th>Prix</th><th>Description</th></tr>
+                                    <tr><th>Numéro du client</th><th>Numéro de Commande</th><th>Quantité</th><th>Prix</th><th>Description</th><th>Date</th></tr>
                                             <c:forEach var="comm" items="${commandes}">
                                         <tr class="input-field">
                                         <form method='POST' action="customerController">
@@ -84,6 +83,9 @@
                                             <td >
                                                 ${comm.DESCRIPTION}                                                                                  
                                             </td>
+                                            <td >
+                                                ${comm.SHIPPING_DATE}                                                                                  
+                                            </td>
                                             <td>
                                                 <a href="customerController?action=DELETE_COMMANDE&purchaseToDelete=${comm.ORDER_NUM}">Delete</a>
                                             </td>
@@ -99,7 +101,14 @@
                             <div><h4>${message}</h4></div>
 
                             <form method='POST' action="customerController">
-                                Num : <input name="purchaseToCreate" size="1" maxlength="100" pattern="{1}+" title="Une lettre en MAJUSCULES"><br/> 
+                                
+                                <select class="listeProduits" name="produit">
+                                    <c:forEach var="item" items="${listeProduits}">
+                                        <option value="${item}">${item}</option>
+                                    </c:forEach>
+                                </select>
+                                
+                                
                                 Quantité : <input name="quantite" size="1" maxlength="1000" pattern="[A-Z]{1}+" title="Une lettre en MAJUSCULES"><br/>               
                                 <input type="hidden" name="action" value="ADD_COMMANDE">
                                 <input type="submit" value="Ajouter">
@@ -111,6 +120,6 @@
                 </div>
 
             </div>
-
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     </body>
 </html>
