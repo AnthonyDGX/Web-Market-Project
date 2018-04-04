@@ -30,13 +30,18 @@
         
          
          
-         <form method='GET' action="adminController">
-            Quantité : <input name="quantite" size="1" maxlength="1000" pattern="[A-Z]{1}+" title="Une lettre en MAJUSCULES"><br/>
+         <form method='POST' action="AdminController">
+            
             <input type="date" class="choixdate" name="date_debut">
             <input type="date" class="choixdate" name="date_fin">
             <input type="hidden" name="action" value="caByProduct">
             <input type="submit" value="Afficher">
         </form>
+        
+        <c:forEach var="item" items="${productCA}">
+            product: <bean:write name="ca" property="key"/>
+            Ca: <bean:write name="ca" property="value"/>
+        </c:forEach>
           <script type="text/javascript" src="resources/js/materialize.min.js"></script>  
    
 

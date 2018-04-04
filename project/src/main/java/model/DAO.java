@@ -382,13 +382,13 @@ public class DAO {
         
             public String descProduct(int product_id) throws SQLException{
             String ret = "";
-            String sql = "SELECT DESCRITPION FROM PRODUCT WHERE PRODUCT_ID = ?";
+            String sql = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_ID = ?";
             try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
                         stmt.setInt(1, product_id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				ret = rs.getString("DESCRITPION");
+				ret = rs.getString("DESCRIPTION");
                             
 			}
 		}
@@ -398,15 +398,33 @@ public class DAO {
         
         // Partie Admin
         
-        public Map<String,Double> chiffreAffaireByProduct(Date deb, Date fin) throws SQLException {
+        public Map<String,Double> chiffreAffaireByProduct(String deb, String fin) throws SQLException {
             Map<String,Double> ret = new HashMap<>();
             String sql ="SELECT PRODUCT_ID, SUM(SHIPPING_COST) AS SALES FROM PURCHASE_ORDER WHERE SHIPPING_DATE BETWEEN ? AND ? "
                     + "GROUP BY PRODUCT_ID";                        
             try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        
-                        stmt.setDate(1, (java.sql.Date) deb);
-                        stmt.setDate(2, (java.sql.Date) fin);
+                       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                       Date parsed1 = null;
+                       Date parsed2 = null;
+                    try {
+                        parsed1 = sdf.parse(deb);
+                    } catch (ParseException e1) {
+                           // TODO Auto-generated catch block
+
+                    }
+                    try {
+                        parsed2 = sdf.parse(fin);
+                    } catch (ParseException e2) {
+                        // TODO Auto-generated catch block
+                        e2.printStackTrace();
+                    }
+                    java.sql.Date data1 = new java.sql.Date(parsed1.getTime());
+                    java.sql.Date data2 = new java.sql.Date(parsed2.getTime());
+                    System.out.println("Le Ca est de ------------------------------------------------------------------ "+ data1);
+                    System.out.println("Le Ca est de ------------------------------------------------------------------ "+ data2);
+                        stmt.setDate(1,  data1);
+                        stmt.setDate(2,  data2);
                         
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {

@@ -108,7 +108,6 @@
                                     </c:forEach>
                                 </select>
                                 
-                                
                                 Quantité : <input name="quantite" size="1" maxlength="1000" pattern="[A-Z]{1}+" title="Une lettre en MAJUSCULES"><br/>               
                                 <input type="hidden" name="action" value="ADD_COMMANDE">
                                 <input type="submit" value="Ajouter">
