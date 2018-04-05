@@ -78,7 +78,7 @@
                                                 <input type="hidden" name="action" value="EDIT_COMMANDE">
                                             </td>
                                             <td >
-                                                ${comm.SHIPPING_COST}                                                                                  
+                                                ${comm.COST}                                                                                  
                                             </td>
                                             <td >
                                                 ${comm.DESCRIPTION}                                                                                  

@@ -55,6 +55,8 @@ public class AdminController extends HttpServlet{
 					break;
                                 case "caByProduct":
                                     session.setAttribute("productCA", dao.chiffreAffaireByProduct(date_debut, date_fin));
+                                    dao.chiffreAffaireByState(date_debut, date_fin);
+                                    dao.chiffreAffaireByCustomer(date_debut, date_fin);
                                     request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
                                 break;
      

@@ -16,6 +16,7 @@
         <link rel="stylesheet" type="text/css" href="resources/css/materialize.css">
         <link rel="stylesheet" type="text/css" href="resources/css/materialize.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
                
 
     </head>
@@ -39,6 +40,8 @@
             <input type="submit" value="Afficher">
         </form>
         
+        <canvas id="myChart"></canvas>
+        
                 
         <c:forEach items="${productCA}" var="item" >
             <p class="produit" value="${item.key}">Produit = ${item.key}</p>
@@ -46,7 +49,40 @@
         </c:forEach>
             
        
-          <script type="text/javascript" src="resources/js/materialize.min.js"></script>  
+          <script type="text/javascript" src="resources/js/materialize.min.js"></script>
+          
+                
+                <script>
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var label = [];
+                    var ca = [];
+                     <c:forEach items="${productCA}" var="item" >
+                          label.push("${item.key}");
+                  </c:forEach>
+                          <c:forEach items="${productCA}" var="item" >
+                          ca.push(${item.value});
+                  </c:forEach>
+                                var chart = new Chart(ctx, {
+                      // The type of chart we want to create
+                      type: 'bar',
+
+                      // The data for our dataset
+                      data: {
+                          labels: label,
+                          datasets: [{
+                              label: "My First dataset",
+                              backgroundColor: 'rgb(255, 99, 132)',
+                              borderColor: 'rgb(255, 99, 132)',
+                              data: ca,
+                          }]
+                      },
+
+                      // Configuration options go here
+                      options: {}
+                  });
+                </script>
+          
+        
           
    
     </body>
