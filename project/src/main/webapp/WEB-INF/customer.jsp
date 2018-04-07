@@ -78,7 +78,7 @@
                                                 <input type="hidden" name="action" value="EDIT_COMMANDE">
                                             </td>
                                             <td >
-                                                ${comm.SHIPPING_COST}                                                                                  
+                                                ${comm.COST}                                                                                  
                                             </td>
                                             <td >
                                                 ${comm.DESCRIPTION}                                                                                  
@@ -107,7 +107,6 @@
                                         <option value="${item}">${item}</option>
                                     </c:forEach>
                                 </select>
-                                
                                 
                                 Quantité : <input name="quantite" size="1" maxlength="1000" pattern="[A-Z]{1}+" title="Une lettre en MAJUSCULES"><br/>               
                                 <input type="hidden" name="action" value="ADD_COMMANDE">
