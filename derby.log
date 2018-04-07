@@ -1,14 +1,1 @@
-Thu Apr 05 15:41:57 CEST 2018 : Apache Derby Network Server - 10.11.1.2 - (1629631) démarré et prêt à accepter les connexions sur le port 1527
-----------------------------------------------------------------
-Thu Apr 05 15:42:48 CEST 2018:
-Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631) : instance a816c00e-0162-960a-dcf0-ffffca282b01 
-dans le répertoire de base de données C:\Users\DGX\Desktop\Web-Market-Project\sample avec le chargeur de classe sun.misc.Launcher$AppClassLoader@266474c2
-Chargé de file:/C:/Program%20Files/Java/jdk1.8.0_161/db/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_161-b12
-user.dir=C:\Program Files\Java\jdk1.8.0_161\db
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
-derby.system.home=C:\Users\DGX\Desktop\Web-Market-Project
-Chargeur de classe de la base de données démarré - derby.database.classpath = ''
+Sat Apr 07 14:54:03 CEST 2018 : Apache Derby Network Server - 10.11.1.2 - (1629631) démarré et prêt à accepter les connexions sur le port 1527
