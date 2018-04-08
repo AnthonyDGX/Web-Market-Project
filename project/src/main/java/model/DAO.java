@@ -29,6 +29,45 @@ public class DAO {
                 this.myDataSource = DataSourceFactory.getDataSource();
 	}
         
+        public double soldeClient(int id) throws SQLException {
+            double ret = 0;
+            String sql = "SELECT CREDIT_LIMIT FROM CUSTOMER WHERE CUSTOMER_ID = ?";
+              try (
+                Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+                    stmt.setInt(1, id);
+                    ResultSet rs = stmt.executeQuery();
+                    while(rs.next()){
+                       ret = rs.getDouble("CREDIT_LIMIT");                      
+                    }
+            }
+            return ret;
+        }
+        
+        public int updateSolde(int id, double price) throws SQLException{
+            int ret = 0;
+            String sql = "UPDATE CUSTOMER SET CREDIT_LIMITE = ? WHERE CUSTOMER_ID = ?";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(2, id);
+                        stmt.setInt(1, (int)(this.soldeClient(id)- price));
+                        
+			ret = stmt.executeUpdate();
+			
+		}
+                
+                return ret;           
+        }
+        
+        public boolean checkAchatSolde(int id, double price) throws SQLException{
+            boolean ret = false;
+            double solde = this.soldeClient(id);
+            if (solde >= price){
+                ret = true;
+            }
+            return ret;
+        }
+        
         public List<DiscountCode> customerCodes(Customer c) throws SQLException{
             List<DiscountCode> result = new LinkedList<>();
             int id = Integer.parseInt(c.getPassword());
