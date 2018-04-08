@@ -51,6 +51,10 @@ public class CustomerController extends HttpServlet{
                 //Pour éditer des commandes
                 String purchaseToEdit = request.getParameter("purchaseToEdit");
                 
+                // infos client
+                Double solde = dao.soldeClient(Integer.parseInt(password));
+                session.setAttribute("solde", solde);
+                
                 
                
                 request.setAttribute("codes", viewCodes(request));
@@ -93,6 +97,17 @@ public class CustomerController extends HttpServlet{
 						request.setAttribute("message", "Impossible de modifier " +  purchaseToEdit + ", cette commande est utilisée.");
 					}
                                     break;
+                                    
+                                    case "DO_VIREMENT":
+                                        try {
+                                            int montant = Integer.parseInt(request.getParameter("montant"));
+                                            dao.virement(Integer.parseInt(password), montant);
+                                             request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
+                                        }
+                                        catch (SQLIntegrityConstraintViolationException e) {
+						request.setAttribute("message", "Impossible de faire le virement ");
+					}
+                                        break;
                                 
 			}
 		} catch (Exception ex) {
