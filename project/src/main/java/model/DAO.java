@@ -173,6 +173,30 @@ public class DAO {
 		return result;
 	}
         
+        public ArrayList<Product> listProduct() throws SQLException {
+
+		ArrayList<Product> result = new ArrayList<>();
+
+                String sql = "SELECT * FROM PRODUCT WHERE QUANTITY_ON_HAND > 0";
+
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                    
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+                                int id = rs.getInt("PRODUCT_ID");
+				String des = rs.getString("DESCRIPTION");
+				double price = rs.getDouble("PURCHASE_COST");
+				Product c = new Product(id);
+                                c.setDescription(des);
+                                c.setPurchaseCost(price);                               
+				result.add(c);
+                                
+			}
+		}
+		return result;
+	}
+        
         public double valueOfDiscountCode(int customer_id) throws SQLException {
             double ret = 0;
             String sql = "SELECT RATE FROM DISCOUNT_CODE"
@@ -276,7 +300,7 @@ public class DAO {
         
         public ArrayList<String> allProduct() throws SQLException {
 		ArrayList<String> result = new ArrayList<>();
-		String sql = "SELECT DESCRIPTION FROM PRODUCT WHERE AVAILABLE = TRUE";
+		String sql = "SELECT DESCRIPTION FROM PRODUCT WHERE QUANTITY_ON_HAND > 0";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
                    

@@ -52,7 +52,7 @@
 
                 <div class="sidebar-wrapper">
                     <div class="logo">
-                        <a href="http://www.creative-tim.com" class="simple-text">
+                        <a href="#" class="simple-text">
                             Bienvenue ${userName}!
                         </a>
                     </div>
@@ -60,22 +60,23 @@
                     <ul class="nav">
 
                         <li class="active">
-                            <a href="user.html">
+                            <a href="#">
                                 <i class="pe-7s-user"></i>
                                 <p>Votre Profil</p>
                             </a>
                         </li>
 
                         <li>
-                            <a href="typography.html">
+                            <a href="customerController?action=SHOW_PRODUIT">
                                 <i class="pe-7s-news-paper"></i>
                                 <p>Liste des Produits</p>
+                                
                             </a>
                         </li>
 
                         <li>
                             <form class="logout" action="LoginController" method="POST">
-                                <input class="form-control " type='submit' name='action' value='Deconnexion'>
+                                 <input class="form-control " type='submit' name='action' value='logout'>
                             </form>
                         </li>
 
@@ -98,17 +99,7 @@
                             <a class="navbar-brand" href="#">L'équipe espère que vous allez trouver votre bonheur ${userName} !</a>
                         </div>
                         <div class="collapse navbar-collapse">
-                            <ul class="nav navbar-nav navbar-left">
-                                <li>
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <p class="hidden-lg hidden-md">Caddie</p>
-                                    </a>
-                                </li>
-
-
-
-                            </ul>
+                            
 
                         </div>
                     </div>
@@ -143,7 +134,7 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                           
+                                                         
                                                             <button type="submit" class="btn btn-info btn-fill pull-right">Effectuer le virement</button>
                                                         </div>
                                                     </div>
@@ -206,6 +197,14 @@
                                                     <small>${userEmail}</small>
                                                 </h4>
                                             </a>
+                                                <p class="description text-center"> "Le plein de fraîcheur <br>
+                                                    et d'économies" <br>
+                                                  
+                                                 </p>
+                                                 <c:forEach var="item" items="${codes}">
+                                                     <p class="description text-center"> Vous possedez un le code de réduction suivant : "${item.discountCode}"</p>
+                                                     <p class="description text-center"> Il vous donne accès à  : ${item.rate}% de réduction sur votre commande</p>
+                                                </c:forEach>
                                         </div>
 
                                     </div>
@@ -220,7 +219,7 @@
                             </div>
 
                         </div>
-                        <div class="row">
+                        
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card" >
@@ -265,18 +264,15 @@
                                                             ${comm.SHIPPING_DATE}
                                                         </td>
                                                         <td>
+                                                            
                                                             <a href="customerController?action=DELETE_COMMANDE&purchaseToDelete=${comm.ORDER_NUM}">Delete</a>
                                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                                             <i class="fa fa-trash"></i>
-                                                            <p class="hidden-lg hidden-md">Poubelle</p>
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <input type="submit" value="Edit">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                            <i class="fa fa-pencil"></i>
-                                                            <p class="hidden-lg hidden-md">Crayon</p>
-                                                            </a>
+                                                            <button type="submit" class="btn btn-info btn-fill pull-left">Edit <i class="fa fa-pencil"></i></button>
+                                                           
                                                         </td>
                                                     </form>
                                                     </tr>
@@ -289,11 +285,20 @@
                                 </div>
                             </div>
 
-                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
+                                                
+        <footer class="footer">
+            <div class="container-fluid">
+               
+                <p class="copyright pull-right">
+                    &copy;<a href="#">Promotion 2020</a>, made with <i data-v-a2425572="" class="fa fa-heart" style="color: rgb(233, 30, 99);"></i> by Sophie Peltier, Gabrielle Aussel & Anthony Dagneaux
+                </p>
+            </div>
+        </footer>
 
 
     </body>

@@ -45,7 +45,7 @@ public class Product implements Serializable {
     private Integer productId;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PURCHASE_COST")
-    private BigDecimal purchaseCost;
+    private double purchaseCost;
     @Column(name = "QUANTITY_ON_HAND")
     private Integer quantityOnHand;
     @Column(name = "MARKUP")
@@ -78,11 +78,11 @@ public class Product implements Serializable {
         this.productId = productId;
     }
 
-    public BigDecimal getPurchaseCost() {
+    public double getPurchaseCost() {
         return purchaseCost;
     }
 
-    public void setPurchaseCost(BigDecimal purchaseCost) {
+    public void setPurchaseCost(double purchaseCost) {
         this.purchaseCost = purchaseCost;
     }
 
@@ -158,5 +158,7 @@ public class Product implements Serializable {
     public String toString() {
         return "model.Product[ productId=" + productId + " ]";
     }
+
+   
     
 }

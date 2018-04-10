@@ -23,6 +23,7 @@ import model.Customer;
 import model.DAO;
 import model.DataSourceFactory;
 import model.DiscountCode;
+import model.Product;
 import model.PurchaseOrder;
 
 /**
@@ -63,7 +64,7 @@ public class CustomerController extends HttpServlet{
                         Customer c = new Customer();
                         c.setPassword(password);
                         
-			request.setAttribute("codes", viewCodes(request));		
+			session.setAttribute("codes", viewCodes(request));		
 			switch (action) {
 				
                                         
@@ -111,6 +112,16 @@ public class CustomerController extends HttpServlet{
                                         catch (SQLIntegrityConstraintViolationException e) {
 						request.setAttribute("message", "Impossible de faire le virement ");
 					}
+                                        break;
+                                        
+                                         case "SHOW_PRODUIT":
+                                             ArrayList<Product> listeProduit = dao.listProduct();
+                                             session.setAttribute("listeProduit", listeProduit);
+                                            request.getRequestDispatcher("WEB-INF/produits.jsp").forward(request, response);                                        
+                                        break;
+                                        
+                                         case "SHOW_CLIENT":          
+                                            request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);                                       
                                         break;
                                 
 			}
