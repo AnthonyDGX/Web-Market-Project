@@ -342,5 +342,22 @@
 
     <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
     <script src="assets/js/demo.js"></script>
+    
+    <script type="text/javascript">
+    	$(document).ready(function(){
+
+                    demo.initChartist();
+
+                    $.notify({
+                    icon: 'pe-7s-gift',
+                    message: "Bienvenue sur votre super Web Market ${userName}! Réalisé par Soso, Gabi et Anthony"
+
+                },{
+                    type: 'info',
+                    timer: 4000
+                });
+
+            });
+        </script>
 
 </html>
