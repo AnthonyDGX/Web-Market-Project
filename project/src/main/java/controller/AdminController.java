@@ -47,6 +47,16 @@ public class AdminController extends HttpServlet{
                
                 String  date_debut = request.getParameter("date_debut");
                 String  date_fin = request.getParameter("date_fin");
+                
+                // Ca par Geo
+                String  date_debut_geo = request.getParameter("date_debut_geo");
+                String  date_fin_geo = request.getParameter("date_fin_geo");
+                
+                // Ca par Client
+                String  date_debut_cli = request.getParameter("date_debut_cli");
+                String  date_fin_cli = request.getParameter("date_fin_cli");
+                
+                
 		if (null != action) {
 			switch (action) {				
 				case "logout":
@@ -55,8 +65,19 @@ public class AdminController extends HttpServlet{
 					break;
                                 case "caByProduct":
                                     session.setAttribute("productCA", dao.chiffreAffaireByProduct(date_debut, date_fin));
-                                    dao.chiffreAffaireByState(date_debut, date_fin);
-                                    dao.chiffreAffaireByCustomer(date_debut, date_fin);
+                                    
+                                    request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                                break;
+                                
+                                case "caByGeo":
+                                    session.setAttribute("geoCA", dao.chiffreAffaireByState(date_debut_geo, date_fin_geo));
+                                    
+                                    
+                                    request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                                break;
+                                
+                                case "caByCli":
+                                    session.setAttribute("cliCA", dao.chiffreAffaireByCustomer(date_debut_cli, date_fin_cli));
                                     request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
                                 break;
      
