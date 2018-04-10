@@ -44,10 +44,9 @@ public class AdminController extends HttpServlet{
                 request.setAttribute("listeProduits", des);
                 
                 // pour le CA par produit
-                DateFormat formatter;
-                formatter = new SimpleDateFormat("yy-MMM-dd");
-                Date  date_debut = formatter.parse(request.getParameter("date_debut"));
-                Date  date_fin = formatter.parse(request.getParameter("date_fin"));
+               
+                String  date_debut = request.getParameter("date_debut");
+                String  date_fin = request.getParameter("date_fin");
 		if (null != action) {
 			switch (action) {				
 				case "logout":
@@ -56,11 +55,11 @@ public class AdminController extends HttpServlet{
 					break;
                                 case "caByProduct":
                                     session.setAttribute("productCA", dao.chiffreAffaireByProduct(date_debut, date_fin));
+                                    dao.chiffreAffaireByState(date_debut, date_fin);
+                                    dao.chiffreAffaireByCustomer(date_debut, date_fin);
                                     request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
                                 break;
-
-                                                                
-                                
+     
 			}
 		}
 

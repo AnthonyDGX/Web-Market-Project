@@ -17,7 +17,7 @@ public class PurchaseOrder {
     private int CUSTOMER_ID;
     private int PRODUCT_ID;
     private int QUANTITY;
-    private double SHIPPING_COST;
+    private double COST;
     private String FREIGHT_COMPANY;
     private String DESCRIPTION;
     private Date SHIPPING_DATE;
@@ -52,12 +52,12 @@ public class PurchaseOrder {
         this.PRODUCT_ID = PRODUCT_ID;
     }
 
-    public double getSHIPPING_COST() {
-        return SHIPPING_COST;
+    public double getCOST() {
+        return COST;
     }
 
-    public void setSHIPPING_COST(double SHIPPING_COST) {
-        this.SHIPPING_COST = SHIPPING_COST;
+    public void setCOST(double COST) {
+        this.COST = COST;
     }
 
     public String getFREIGHT_COMPANY() {
