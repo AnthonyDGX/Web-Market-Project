@@ -70,6 +70,12 @@ public class DAO {
                 return ret;           
         }
         
+        public int remboursement (int id, double price) throws SQLException{
+            int ret = 0;
+            
+            return ret;
+        }
+        
         public boolean checkAchatSolde(int id, int product_id, int quantite) throws SQLException{
             boolean ret = false;
             double solde = this.soldeClient(id);
