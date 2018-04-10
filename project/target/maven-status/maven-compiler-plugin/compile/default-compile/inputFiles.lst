@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\controller\CustomerController.java
 C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\Customer.java
 C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\DAO.java
@@ -11,17 +10,3 @@ C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\Manufact
 C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\PurchaseOrder.java
 C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\DataSourceFactory.java
 C:\Users\SophieP\Desktop\Web-Market-Project\project\src\main\java\model\DiscountCode.java
-=======
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\model\Customer.java
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\model\DataSourceFactory.java
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\model\PurchaseOrder.java
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\model\DAO.java
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\controller\AdminController.java
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\model\MicroMarket.java
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\controller\LoginController.java
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\model\DiscountCode.java
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\model\Product.java
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\model\ProductCode.java
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\controller\CustomerController.java
-C:\Users\mcommero\Documents\GitHub\Web-Market-Project\project\src\main\java\model\Manufacturer.java
->>>>>>> Anthony
