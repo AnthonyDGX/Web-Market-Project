@@ -75,7 +75,7 @@
 
                         <li>
                             <form class="logout" action="LoginController" method="POST">
-                                <input class="form-control " type='submit' name='action' value='logout'>
+                                <input class="form-control " type='submit' name='action' value='Deconnexion'>
                             </form>
                         </li>
 
@@ -101,8 +101,8 @@
                             <ul class="nav navbar-nav navbar-left">
                                 <li>
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-dashboard"></i>
-                                        <p class="hidden-lg hidden-md">Dashboard</p>
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <p class="hidden-lg hidden-md">Caddie</p>
                                     </a>
                                 </li>
 
@@ -179,7 +179,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <div class="form-group">
+                                                    <div class="form-group ">
                                                         <button type="submit" class="btn btn-info btn-fill pull-right">Ajouter</button>
                                                     </div>
                                                 </div>
@@ -225,20 +225,20 @@
                                 <div class="col-md-12">
                                     <div class="card" >
                                         <div class="header">
-                                            <h4 class="title">Striped Table with Hover</h4>
-                                            <p class="category">Here is a subtitle for this table</p>
+                                            <h4 class="title">Vos commandes</h4>
+                                            <p class="category">Ici vous pourrez modifier ou effacer vos commandes.</p>
                                         </div>
                                         <div class="content table-responsive table-full-width">
                                             <table class="table table-hover table-striped">
                                                 <thead>
                                                 <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Salary</th>
-                                                <th>Country</th>
-                                                <th>City</th>
-                                                <th>Salary</th>
-                                                <th>Country</th>
-                                                <th>City</th>
+                                                <th>ID Produit</th>
+                                                <th>Quantité</th>
+                                                <th>Prix Total</th>
+                                                <th>Type de produit</th>
+                                                <th>Date</th>
+                                                <th>Effacer</th>
+                                                <th>Modifier</th>
                                                 </thead>
                                                 <tbody>
                                                     <c:forEach var="comm" items="${commandes}">
@@ -266,9 +266,17 @@
                                                         </td>
                                                         <td>
                                                             <a href="customerController?action=DELETE_COMMANDE&purchaseToDelete=${comm.ORDER_NUM}">Delete</a>
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                            <i class="fa fa-trash"></i>
+                                                            <p class="hidden-lg hidden-md">Poubelle</p>
+                                                            </a>
                                                         </td>
                                                         <td>
                                                             <input type="submit" value="Edit">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                            <i class="fa fa-pencil"></i>
+                                                            <p class="hidden-lg hidden-md">Crayon</p>
+                                                            </a>
                                                         </td>
                                                     </form>
                                                     </tr>
@@ -284,40 +292,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <nav class="pull-left">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        Home
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Company
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Portfolio
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Blog
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <p class="copyright pull-right">
-                            &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                        </p>
-                    </div>
-                </footer>
-
             </div>
         </div>
 
@@ -350,7 +324,7 @@
 
                     $.notify({
                     icon: 'pe-7s-gift',
-                    message: "Bienvenue sur votre super Web Market ${userName}! Réalisé par Soso, Gabi et Anthony"
+                    message: "Bienvenue sur votre super Web Market ${userName}! Réalisé par Soso, Gaby et Antho"
 
                 },{
                     type: 'info',
