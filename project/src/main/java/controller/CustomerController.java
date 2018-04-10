@@ -70,6 +70,8 @@ public class CustomerController extends HttpServlet{
                                 case "ADD_COMMANDE": // Requête d'ajout (vient du formulaire de saisie)
                                     dao.addCommande(Integer.parseInt(password), Integer.parseInt(quantite), dao.numProduct(request.getParameter("produit")));
                                     session.setAttribute("commandes", dao.customerCommandes(c));
+                                    solde = dao.soldeClient(Integer.parseInt(password));
+                                    session.setAttribute("solde", solde);
                                     request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
                                     break;
                                 
@@ -102,7 +104,9 @@ public class CustomerController extends HttpServlet{
                                         try {
                                             int montant = Integer.parseInt(request.getParameter("montant"));
                                             dao.virement(Integer.parseInt(password), montant);
-                                             request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
+                                            solde = dao.soldeClient(Integer.parseInt(password));
+                                            session.setAttribute("solde", solde);
+                                            request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
                                         }
                                         catch (SQLIntegrityConstraintViolationException e) {
 						request.setAttribute("message", "Impossible de faire le virement ");

@@ -50,8 +50,7 @@
             
        
           <script type="text/javascript" src="resources/js/materialize.min.js"></script>
-          
-                
+   
                 <script>
                     var ctx = document.getElementById('myChart').getContext('2d');
                     var label = [];
@@ -62,7 +61,7 @@
                           <c:forEach items="${productCA}" var="item" >
                           ca.push(${item.value});
                   </c:forEach>
-                                var chart = new Chart(ctx, {
+                    var chart = new Chart(ctx, {
                       // The type of chart we want to create
                       type: 'bar',
 
@@ -81,9 +80,6 @@
                       options: {}
                   });
                 </script>
-          
-        
-          
-   
+                
     </body>
 </html>
