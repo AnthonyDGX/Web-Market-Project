@@ -112,6 +112,16 @@
                                 <input type="hidden" name="action" value="ADD_COMMANDE">
                                 <input type="submit" value="Ajouter">
                             </form>
+                            
+                            <p>Votre solde est de : ${solde}</p>
+                            <form method='POST' action="customerController">
+                                
+                               
+                                
+                                Virement : <input name="montant" valu="montant à virer sur le compte"><br/>               
+                                <input type="hidden" name="action" value="DO_VIREMENT">
+                                <input type="submit" value="Ajouter">
+                            </form>
 
 
                         </div>

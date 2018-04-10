@@ -29,6 +29,57 @@ public class DAO {
                 this.myDataSource = DataSourceFactory.getDataSource();
 	}
         
+        public int virement(int id, int montant) throws SQLException{
+            int ret = 0;
+            String sql = "UPDATE CUSTOMER SET CREDIT_LIMIT = ? WHERE CUSTOMER_ID = ?";
+            try (
+                Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+                    stmt.setInt(1,(int)(soldeClient(id)+montant));
+                    stmt.setInt(2, id);
+                   ret = stmt.executeUpdate();                   
+            }
+            return ret;
+        }
+        
+        public double soldeClient(int id) throws SQLException {
+            double ret = 0;
+            String sql = "SELECT CREDIT_LIMIT FROM CUSTOMER WHERE CUSTOMER_ID = ?";
+              try (
+                Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+                    stmt.setInt(1, id);
+                    ResultSet rs = stmt.executeQuery();
+                    while(rs.next()){
+                       ret = rs.getDouble("CREDIT_LIMIT");                      
+                    }
+            }
+            return ret;
+        }
+        
+        public int updateSolde(int id, double price) throws SQLException{
+            int ret = 0;
+            String sql = "UPDATE CUSTOMER SET CREDIT_LIMIT = ? WHERE CUSTOMER_ID = ?";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(2, id);
+                        stmt.setInt(1, (int)(this.soldeClient(id)- price));                      
+			ret = stmt.executeUpdate();			
+		}
+                
+                return ret;           
+        }
+        
+        public boolean checkAchatSolde(int id, int product_id, int quantite) throws SQLException{
+            boolean ret = false;
+            double solde = this.soldeClient(id);
+            if (solde >= setPrix(quantite, product_id, id)){
+                ret = true;
+                System.out.println("Le prix est de tadadadadadadadada" + setPrix(quantite, product_id, id));
+            }
+            return ret;
+        }
+        
         public List<DiscountCode> customerCodes(Customer c) throws SQLException{
             List<DiscountCode> result = new LinkedList<>();
             int id = Integer.parseInt(c.getPassword());
@@ -160,7 +211,9 @@ public class DAO {
         public int addCommande(int customerID, int quantity, int product_id) throws SQLException {
 		int result = 0;
 		String sql = "INSERT INTO PURCHASE_ORDER (ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY, SHIPPING_DATE) VALUES (?, ?, ?, ?, ?)";
-		try (Connection connection = myDataSource.getConnection(); 
+                if (checkAchatSolde(customerID, product_id, quantity) == true){
+                    updateSolde(customerID, setPrix(quantity, product_id,  customerID));
+                    try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setInt(2, customerID);
 			stmt.setInt(1, numeroCommande());
@@ -169,7 +222,15 @@ public class DAO {
                        
                         stmt.setDate(5, java.sql.Date.valueOf(java.time.LocalDate.now()));
 			result = stmt.executeUpdate();
-		}
+                    }
+                }
+                
+                else{
+                    throw new SQLException("Vous n'avez pas assez d'argent pour acheter ce produit. Votre solde est de "+ soldeClient(customerID)+"€ et votre achat coûte : "+ setPrix(quantity, product_id, customerID)+"€");
+                }
+                
+               
+		
 		return result;
 	}
         
@@ -209,7 +270,7 @@ public class DAO {
         
         public ArrayList<String> allProduct() throws SQLException {
 		ArrayList<String> result = new ArrayList<>();
-		String sql = "SELECT DESCRIPTION FROM PRODUCT";
+		String sql = "SELECT DESCRIPTION FROM PRODUCT WHERE AVAILABLE = TRUE";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
                    
