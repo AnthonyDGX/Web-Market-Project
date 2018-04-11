@@ -185,7 +185,7 @@
                             <div class="col-md-4">
                                 <div class="card card-user">
                                     <div class="image">
-                                        <img src="https://celebmix.com/wp-content/uploads/2017/06/happy-23rd-anniversary-to-the-lion-king-01.jpg" alt="..."/>
+                                        <img src="http://www.tipux.com/files/gfx_m_gif/68d3/2317.gif" alt="..."/>
                                     </div>
                                     <div class="content">
                                         <div class="author">
