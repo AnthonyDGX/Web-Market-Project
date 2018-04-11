@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -273,7 +274,9 @@ public class DAO {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				
-                                result = (rs.getDouble("PURCHASE_COST")*quantite)*((100-valueOfDiscountCode(customer_id))/100);             
+                                result = (rs.getDouble("PURCHASE_COST")*quantite)*((100-valueOfDiscountCode(customer_id))/100);
+                                
+                                
 			}
 		}
 		return result;

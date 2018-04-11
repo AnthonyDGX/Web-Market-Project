@@ -185,12 +185,12 @@
                             <div class="col-md-4">
                                 <div class="card card-user">
                                     <div class="image">
-                                        <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
+                                        <img src="https://media.giphy.com/media/11p7VSL9W2AclW/giphy.gif" alt="..."/>
                                     </div>
                                     <div class="content">
                                         <div class="author">
                                             <a href="#">
-                                                <img class="avatar border-gray" src="assets/img/faces/Remi.jpg" alt="..."/>
+                                                <img class="avatar border-gray" src="assets/img/faces/jc.jpg" alt="..."/>
                                                     
                                                 <h4 class="title">${userName}<br />
                                                     
