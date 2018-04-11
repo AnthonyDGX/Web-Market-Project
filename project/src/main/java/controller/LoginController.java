@@ -38,6 +38,7 @@ public class LoginController extends HttpServlet{
                                         
 					break;
 				case "logout":
+                                    
 					doLogout(request);
 					break;                                                                
                                 
@@ -133,6 +134,9 @@ public class LoginController extends HttpServlet{
                         session.setAttribute("commandes", dao.customerCommandes(c));  
                         ArrayList<String> des = dao.allProduct();
                         request.setAttribute("listeProduits", des);
+                        Double solde = dao.soldeClient(Integer.parseInt(password));
+                        session.setAttribute("solde", solde);
+                        session.setAttribute("codes", viewCodes(request));
                     }
                     else if (login.equals("nodata")){
                         request.setAttribute("errorMessage", "Login/Password incorrect");
@@ -175,4 +179,16 @@ public class LoginController extends HttpServlet{
             result = dao.customerCommandes(c);                    
             return result;
          }
+         
+        public List<DiscountCode> viewCodes(HttpServletRequest request) throws SQLException {
+            List<DiscountCode> result = new LinkedList<>();
+            DAO dao= new DAO();
+            HttpSession session = request.getSession();
+            String password = ((String)session.getAttribute("userPassword"));
+            Customer c = new Customer();
+            c.setPassword(password);
+            result = dao.customerCodes(c);         
+            
+            return result;
+    }
 }
