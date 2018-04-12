@@ -185,12 +185,12 @@
                             <div class="col-md-4">
                                 <div class="card card-user">
                                     <div class="image">
-                                        <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
+                                        <img src="http://www.tipux.com/files/gfx_m_gif/68d3/2317.gif" alt="..."/>
                                     </div>
                                     <div class="content">
                                         <div class="author">
                                             <a href="#">
-                                                <img class="avatar border-gray" src="assets/img/faces/Remi.jpg" alt="..."/>
+                                                <img class="avatar border-gray" src="assets/img/faces/jc.jpg" alt="..."/>
                                                     
                                                 <h4 class="title">${userName}<br />
                                                     
@@ -255,7 +255,7 @@
                                                             <input type="hidden" name="action" value="EDIT_COMMANDE">
                                                         </td>
                                                         <td >
-                                                            ${comm.COST}
+                                                            ${comm.COST} $
                                                         </td>
                                                         <td >
                                                             ${comm.DESCRIPTION}
