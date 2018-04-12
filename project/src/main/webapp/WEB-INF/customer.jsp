@@ -185,7 +185,7 @@
                             <div class="col-md-4">
                                 <div class="card card-user">
                                     <div class="image">
-                                        <img src="http://www.tipux.com/files/gfx_m_gif/68d3/2317.gif" alt="..."/>
+                                        <img class="banniere" src="http://www.tipux.com/files/gfx_m_gif/68d3/2317.gif" alt="..."/>
                                     </div>
                                     <div class="content">
                                         <div class="author">
