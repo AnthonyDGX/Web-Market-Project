@@ -24,13 +24,15 @@ public class DAO {
         private final DataSource myDataSource;
 
 	/**
-	 * Construit le AO avec sa source de données
+	 * Construit le DAO avec sa source de données
 	 */
 	public DAO() {
                 this.myDataSource = DataSourceFactory.getDataSource();
 	}
         
-        public int virement(int id, int montant) throws SQLException{
+        // entrer l'id d'un client est la somme que vous voulez verser sur son compte
+        
+        public int virement(int id, double montant) throws SQLException{
             int ret = 0;
             String sql = "UPDATE CUSTOMER SET CREDIT_LIMIT = ? WHERE CUSTOMER_ID = ?";
             try (
@@ -43,6 +45,7 @@ public class DAO {
             return ret;
         }
         
+        //metode qui recupere la solde presente sur le compte d'un client en renseignant son id
         public double soldeClient(int id) throws SQLException {
             double ret = 0;
             String sql = "SELECT CREDIT_LIMIT FROM CUSTOMER WHERE CUSTOMER_ID = ?";
@@ -58,6 +61,7 @@ public class DAO {
             return ret;
         }
         
+        // méthode qui va mettre à jour la solde d'un client en prenant en compte son id et le prix de son achat
         public int updateSolde(int id, double price) throws SQLException{
             int ret = 0;
             String sql = "UPDATE CUSTOMER SET CREDIT_LIMIT = ? WHERE CUSTOMER_ID = ?";
@@ -71,12 +75,13 @@ public class DAO {
                 return ret;           
         }
         
+        // futur méthode ayant pour but de rembourser le cilent qui supprime une commande
         public int remboursement (int id, double price) throws SQLException{
-            int ret = 0;
-            
+            int ret = 0;           
             return ret;
         }
         
+        // Methode qui vériffie si le cliant a assez d'aregtn sur son compte pour poouvoir effectuer son achat
         public boolean checkAchatSolde(int id, int product_id, int quantite) throws SQLException{
             boolean ret = false;
             double solde = this.soldeClient(id);
@@ -87,6 +92,7 @@ public class DAO {
             return ret;
         }
         
+        // retournne le discount code d'un client en fonction de son id
         public List<DiscountCode> customerCodes(Customer c) throws SQLException{
             List<DiscountCode> result = new LinkedList<>();
             int id = Integer.parseInt(c.getPassword());
@@ -112,6 +118,7 @@ public class DAO {
         }
         
         
+        // methode qui retourne dans une liste la liste de tous les achats d'un client
         public List<PurchaseOrder> customerCommandes(Customer c) throws SQLException{
             List<PurchaseOrder> result = new LinkedList<>();
             int id = Integer.parseInt(c.getPassword());
@@ -147,13 +154,7 @@ public class DAO {
             return result;
         }
         
-        
-
-	/**
-	 * Contenu de la table DISCOUNT_CODE
-	 * @return Liste des discount codes
-	 * @throws SQLException renvoyées par JDBC
-	 */
+        // Retourne tous les codes de promotions client
 	public List<DiscountCode> allCodes() throws SQLException {
 
 		List<DiscountCode> result = new LinkedList<>();
@@ -174,6 +175,8 @@ public class DAO {
 		return result;
 	}
         
+        
+        // Retourne une liste de string affichant les description des produits en stock
         public ArrayList<Product> listProduct() throws SQLException {
 
 		ArrayList<Product> result = new ArrayList<>();
@@ -198,6 +201,7 @@ public class DAO {
 		return result;
 	}
         
+        //retourne la valeur du code de reduction d'un client en fonction de son id
         public double valueOfDiscountCode(int customer_id) throws SQLException {
             double ret = 0;
             String sql = "SELECT RATE FROM DISCOUNT_CODE"
@@ -219,13 +223,7 @@ public class DAO {
             return ret;
         }
 
-	/**
-	 * Ajout d'un enregistrement dans la table DISCOUNT_CODE
-	 * @param code le code (non null)
-	 * @param rate le taux (positive or 0)
-	 * @return 1 si succès, 0 sinon
-	 * @throws SQLException renvoyées par JDBC
-	 */
+        // créer un dsicount code
 	public int addDiscountCode(String code, float rate) throws SQLException {
 		int result = 0;
 		String sql = "INSERT INTO DISCOUNT_CODE VALUES (?, ?)";
@@ -238,7 +236,7 @@ public class DAO {
 		return result;
 	}
         
-        
+        // methode permettant de passer une commande
         public int addCommande(int customerID, int quantity, int product_id) throws SQLException {
 		int result = 0;
 		String sql = "INSERT INTO PURCHASE_ORDER (ORDER_NUM, CUSTOMER_ID, PRODUCT_ID, QUANTITY, SHIPPING_DATE) VALUES (?, ?, ?, ?, ?)";
@@ -491,6 +489,7 @@ public class DAO {
             return ret;
         }
         
+            
         // Partie Admin
             
         public double getCost(int product_id) throws SQLException{
