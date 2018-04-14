@@ -73,6 +73,7 @@ public class CustomerController extends HttpServlet{
                                     session.setAttribute("commandes", dao.customerCommandes(c));
                                     solde = dao.soldeClient(Integer.parseInt(password));
                                     session.setAttribute("solde", solde);
+                                    request.setAttribute("message", "Commande de "+quantite+" '"+request.getParameter("produit")+"'"+" réalisée.");
                                     request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
                                     break;
                                 
@@ -107,10 +108,11 @@ public class CustomerController extends HttpServlet{
                                             dao.virement(Integer.parseInt(password), montant);
                                             solde = dao.soldeClient(Integer.parseInt(password));
                                             session.setAttribute("solde", solde);
+                                            request.setAttribute("message", "Virement de : "+ montant +"$ réalisé sur votre compte.");
                                             request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
                                         }
                                         catch (SQLIntegrityConstraintViolationException e) {
-						request.setAttribute("message", "Impossible de faire le virement ");
+						
 					}
                                         break;
                                         

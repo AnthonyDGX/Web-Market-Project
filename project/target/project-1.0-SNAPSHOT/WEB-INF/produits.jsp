@@ -11,7 +11,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/png" href="assets/img/favicon.ico">
+        <link rel="icon" type="image/png" href="resources/assets/guarantee.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
         <title>Web Market de ${userName}</title>
@@ -32,8 +32,8 @@
 
         <!--  CSS for Demo Purpose, don't include it in your project     -->
         <link href="assets/css/demo.css" rel="stylesheet" />
-        
-         <!--  CSS personnalisé    -->    
+
+        <!--  CSS personnalisé    -->    
         <link href="assets/css/custom.css" rel="stylesheet" />
 
 
@@ -70,13 +70,13 @@
                             <a href="customerController?action=SHOW_PRODUIT">
                                 <i class="pe-7s-news-paper"></i>
                                 <p>Liste des Produits</p>
-                                
+
                             </a>
                         </li>
 
                         <li>
                             <form class="logout" action="LoginController" method="POST">
-                                 <input class="form-control " type='submit' name='action' value='logout'>
+                                <input class="form-control " type='submit' name='action' value='DECONNEXION'>
                             </form>
                         </li>
 
@@ -99,7 +99,7 @@
                             <a class="navbar-brand" href="#">L'équipe espère que vous allez trouver votre bonheur ${userName} !</a>
                         </div>
                         <div class="collapse navbar-collapse">
-                            
+
 
                         </div>
                     </div>
@@ -116,32 +116,32 @@
                                         <h4 class="title">Votre compte</h4>
                                     </div>
                                     <div class="content">
-                                        
-                                            <div class="row">
-                                                <div class="col-md-5">
+
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label>Solde de votre compte : </label>
+                                                    <input type="text" class="form-control" disabled placeholder="Company" value="${solde}">
+                                                </div>
+                                            </div>
+                                            <form method='POST' action="customerController">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label>Solde de votre compte : </label>
-                                                        <input type="text" class="form-control" disabled placeholder="Company" value="${solde}">
+                                                        <label>Somme à verser</label>
+                                                        <input type="text" class="form-control" placeholder="montant" name="montant">
+                                                        <input type="hidden" name="action" value="DO_VIREMENT">
                                                     </div>
                                                 </div>
-                                                <form method='POST' action="customerController">
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label>Somme à verser</label>
-                                                             <input type="text" class="form-control" placeholder="montant" name="montant">
-                                                             <input type="hidden" name="action" value="DO_VIREMENT">
-                                                        </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+
+                                                        <button type="submit" class="btn btn-info btn-fill pull-right">Effectuer le virement</button>
                                                     </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                         
-                                                            <button type="submit" class="btn btn-info btn-fill pull-right">Effectuer le virement</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            
-                                       
+                                                </div>
+                                            </form>
+                                        </div>
+
+
                                     </div>
                                 </div>
                                 <div class="card">
@@ -185,27 +185,27 @@
                             <div class="col-md-4">
                                 <div class="card card-user">
                                     <div class="image">
-                                        <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
+                                        <img class="banniere" src="https://media.giphy.com/media/11p7VSL9W2AclW/giphy.gif" alt="..."/>
                                     </div>
                                     <div class="content">
                                         <div class="author">
                                             <a href="#">
-                                                <img class="avatar border-gray" src="assets/img/faces/Remi.jpg" alt="..."/>
-                                                    
+                                                <img class="avatar border-gray" src="assets/img/faces/jc.jpg" alt="..."/>
+
                                                 <h4 class="title">${userName}<br />
-                                                    
+
                                                     <small>${userEmail}</small>
                                                 </h4>
-                                                
+
                                             </a>
-                                                <p class="description text-center"> "Le plein de fraîcheur <br>
-                                                    et d'économies" <br>
-                                                  
-                                                 </p>
-                                                 <c:forEach var="item" items="${codes}">
-                                                     <p class="description text-center"> Vous possedez un le code de réduction suivant : "${item.discountCode}"</p>
-                                                     <p class="description text-center"> Il vous donne accès à  : ${item.rate}% de réduction sur votre commande</p>
-                                                </c:forEach>
+                                            <p class="description text-center"> "Le plein de fraîcheur <br>
+                                                et d'économies" <br>
+
+                                            </p>
+                                            <c:forEach var="item" items="${codes}">
+                                                <p class="description text-center"> Vous possedez un le code de réduction suivant : "${item.discountCode}"</p>
+                                                <p class="description text-center"> Il vous donne accès à  : ${item.rate}% de réduction sur votre commande</p>
+                                            </c:forEach>
                                         </div>
 
                                     </div>
@@ -220,29 +220,29 @@
                             </div>
 
                         </div>
-                        
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="card" >
-                                        <div class="header">
-                                            <h4 class="title">Liste des produits en stock</h4>
-                                            <p class="category">Ici vous trouverez la liste des produits que vous pouvez acheter.</p>
-                                        </div>
-                                        <div class="content table-responsive table-full-width">
-                                            <table class="table table-hover table-striped">
-                                                <thead>
-                                                
-                                                <th>ID Produit</th>
-                                                <th>Prix </th>
-                                                <th>Type de produit</th>
-                                                <th>Prix avec votre réduction</th>
-                                                
-                                                
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach var="p" items="${listeProduit}">
-                                                        <tr>
-                                                    
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card" >
+                                    <div class="header">
+                                        <h4 class="title">Liste des produits en stock</h4>
+                                        <p class="category">Ici vous trouverez la liste des produits que vous pouvez acheter.</p>
+                                    </div>
+                                    <div class="content table-responsive table-full-width">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+
+                                            <th>ID Produit</th>
+                                            <th>Prix </th>
+                                            <th>Type de produit</th>
+                                            <th>Prix avec votre réduction</th>
+
+
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="p" items="${listeProduit}">
+                                                    <tr>
+
                                                         <td >
                                                             ${p.productId}
                                                         </td>
@@ -252,37 +252,39 @@
                                                         <td >
                                                             ${p.description}
                                                         </td>
-                                                         <td >
-                                                           <c:forEach var="item" items="${codes}">
-                                                                
+                                                        <td >
+                                                            <c:forEach var="item" items="${codes}">
+
                                                                 ${(((100-item.rate) * p.purchaseCost)/100)} $ </p>
-                                                           </c:forEach>
+                                                            </c:forEach>
                                                         </td>
-                                                        
+
                                                     </tr>
                                                 </c:forEach> 
-                                                </tbody>
-                                            </table>
+                                            </tbody>
+                                        </table>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                        
+
                     </div>
+
+
                 </div>
+                <footer class="footer">
+                    <div class="container-fluid">
+
+                        <p class="copyright pull-right">
+                            &copy;<a href="#">Promotion 2020</a>, made with <i data-v-a2425572="" class="fa fa-heart" style="color: rgb(233, 30, 99);"></i> by Sophie Peltier, Gabrielle Aussel & Anthony Dagneaux
+                        </p>
+                    </div>
+                </footer>  
             </div>
-        </div>
-                                                
-        <footer class="footer">
-            <div class="container-fluid">
-               
-                <p class="copyright pull-right">
-                    &copy;<a href="#">Promotion 2020</a>, made with love by Sophie Peltier, Gabrielle Aussel & Anthony Dagneaux
-                </p>
-            </div>
-        </footer>
+
+
 
     </body>
 
@@ -304,22 +306,22 @@
 
     <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
     <script src="assets/js/demo.js"></script>
-    
+
     <script type="text/javascript">
-    	$(document).ready(function(){
+        $(document).ready(function () {
 
-                    demo.initChartist();
+            demo.initChartist();
 
-                    $.notify({
-                    icon: 'pe-7s-gift',
-                    message: "Bienvenue sur votre super Web Market ${userName}! Réalisé par Soso, Gaby et Antho"
+            $.notify({
+                icon: 'pe-7s-gift',
+                message: "Bienvenue sur votre super Web Market ${userName}! Réalisé par Soso, Gaby et Antho"
 
-                },{
-                    type: 'info',
-                    timer: 4000
-                });
-
+            }, {
+                type: 'info',
+                timer: 4000
             });
-        </script>
+
+        });
+    </script>
 
 </html>
