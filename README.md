@@ -66,7 +66,18 @@ Le projet sera évalué par une présentation orale en groupe :
 410 www.nycompltd@repair.example.com
 
 </pre>
+----------
 
 - Pour la réalisation des graphiques, nous avont fais le choix d'utiliser <i>ChartJS</i> qui est une bibliothèque beaucoup plus utilisée que Google Chart. 
     
 - Côté framework css nous avons opté pour <i>Boostrap</i>, un classique.
+
+--------------
+
+REPARTITION DES RÔLES :
+
+Sophie et Gabrielle étaient en charge de réaliser le front de l'application. Elles avaient pour missions de : 
+    - réaliser une maquette
+    - choisir le framework CSS
+    - réaliser les maquettes en html/ccs/js
+De son côté, Anthony était en charge de la mise en place de l'architecture MVC et a effectué toutes les relations entre la base de donnée et l'utilisateur.
