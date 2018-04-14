@@ -37,7 +37,7 @@ public class LoginController extends HttpServlet{
 					checkLogin(request);
                                         
 					break;
-				case "logout":
+				case "DECONNEXION":
                                     
 					doLogout(request);
 					break;                                                                

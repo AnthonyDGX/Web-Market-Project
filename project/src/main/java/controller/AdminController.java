@@ -48,6 +48,11 @@ public class AdminController extends HttpServlet{
                 String  date_debut = request.getParameter("date_debut");
                 String  date_fin = request.getParameter("date_fin");
                 
+                // pour le CA par categorie d'article
+               
+                String  date_debut_cat = request.getParameter("date_debut_cat");
+                String  date_fin_cat = request.getParameter("date_fin_cat");
+                
                 // Ca par Geo
                 String  date_debut_geo = request.getParameter("date_debut_geo");
                 String  date_fin_geo = request.getParameter("date_fin_geo");
@@ -65,6 +70,12 @@ public class AdminController extends HttpServlet{
 					break;
                                 case "caByProduct":
                                     session.setAttribute("productCA", dao.chiffreAffaireByProduct(date_debut, date_fin));
+                                    
+                                    request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                                break;
+                                
+                                 case "caByProductCode":
+                                    session.setAttribute("productCodeCA", dao.chiffreAffaireByProductCode(date_debut_cat, date_fin_cat));
                                     
                                     request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
                                 break;

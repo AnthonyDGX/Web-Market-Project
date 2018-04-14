@@ -12,7 +12,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/png" href="assets/img/favicon.ico">
+        <link rel="icon" type="image/png" href="resources/assets/guarantee.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
         <title>Administrateur</title>
@@ -75,7 +75,7 @@
                         </li>
                         <li>
                             <form class="logout" action="LoginController" method="POST">
-                                <input class="form-control " type='submit' name='action' value='logout'>
+                                <input class="form-control " type='submit' name='action' value='DECONNEXION'>
                             </form>
                         </li>
 
@@ -161,7 +161,7 @@
 
 
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <div class="card ">
                                     <div class="header">
                                         <h4 class="title">Chiffre d'affaire par Client</h4>
@@ -186,8 +186,33 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card ">
+                                    <div class="header">
+                                        <h4 class="title">Chiffre d'affaire par Catégorie d'article</h4>
+                                        <p class="category">Qui est le plus gros acheteur compulsif ?</p>
+                                        <form method='POST' action="AdminController">
+                                            <input type="date" class="choixdate" name="date_debut_cat">
+                                            <input type="date" class="choixdate" name="date_fin_cat">
+                                            <input type="hidden" name="action" value="caByProductCode">
+                                            <input type="submit" value="Envoyer">
+                                        </form>
+                                    </div>
+                                    <div class="content">
+                                        <canvas id="chartCat"></canvas>
 
+                                        <div class="footer">
 
+                                            <hr>
+                                            <div class="stats">
+                                                <i class="fa fa-check"></i> Etude réalisée en partenariat avec M. Francis Faux, enseignant.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -325,6 +350,36 @@
                 labels: label,
                 datasets: [{
                         label: "CA par Client en $",
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: ca,
+                    }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    </script>
+    
+    <script>
+        var ctx = document.getElementById('chartCat').getContext('2d');
+        var label = [];
+        var ca = [];
+            <c:forEach items="${productCodeCA}" var="item" >
+                label.push("${item.key}");
+        </c:forEach>
+            <c:forEach items="${productCodeCA}" var="item" >
+                ca.push(${item.value});
+        </c:forEach>
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                labels: label,
+                datasets: [{
+                        label: "CA par catégorie d'article en $",
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: ca,
