@@ -66,3 +66,7 @@ Le projet sera évalué par une présentation orale en groupe :
 410 www.nycompltd@repair.example.com
 
 </pre>
+
+- Pour la réalisation des graphiques, nous avont fais le choix d'utiliser <i>ChartJS</i> qui est une bibliothèque beaucoup plus utilisée que Google Chart. 
+    
+- Côté framework css nous avons opté pour <i>Boostrap</i>, un classique.
