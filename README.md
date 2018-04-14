@@ -27,8 +27,8 @@ Pour l'administrateur :
 
 - L'administrateur s'authentifie en utilisant un login / password prédéfini dans l'application : 
   
-    login : admin@admin
-    password : admin
+ <pre> login : admin@admin   
+ password : admin</pre>
 
 Une fois authentifié, l'administrateur a accès à une série de tableaux de bord graphiques qui lui permettent de visualiser des statistiques sur les commandes saisies :
 
