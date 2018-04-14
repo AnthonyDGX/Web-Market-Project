@@ -51,8 +51,8 @@ Le projet sera évalué par une présentation orale en groupe :
     
 - Voici la liste des utilisateurs de notre base de donnée, avec leur mdp et suivi de leur login :
 <pre>
-1 jumboeagle@example.com	
-2  www.new.example.com
+1   jumboeagle@example.com	
+2   www.new.example.com
 25	www.wrencomp.example.com	
 3	www.smallbill.example.com	
 36	www.bobhostcorp.example.com
