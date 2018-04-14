@@ -123,7 +123,7 @@
 
                                             <hr>
                                             <div class="stats">
-                                                <i class="fa fa-clock-o"></i> Etude très sérieuse réalisée d'après les achats de Sophie P.
+                                                <i class="fa fa-clock-o"></i> Etude très sérieuse réalisée d'après les achats de Sophie P. 
                                             </div>
                                         </div>
                                     </div>
@@ -214,6 +214,34 @@
                             </div>
                             
                         </div>
+                        
+                        <div class="row">
+                             <div class="col-md-6">
+                                <div class="card ">
+                                    <div class="header">
+                                        <h4 class="title">Chiffre d'affaire par ZIP (zone géographique des MICRO-MARKET)</h4>
+                                        <p class="category">Qui est le plus gros acheteur compulsif ?</p>
+                                        <form method='POST' action="AdminController">
+                                            <input type="date" class="choixdate" name="date_debut_zip">
+                                            <input type="date" class="choixdate" name="date_fin_zip">
+                                            <input type="hidden" name="action" value="caByZip">
+                                            <input type="submit" value="Envoyer">
+                                        </form>
+                                    </div>
+                                    <div class="content">
+                                        <canvas id="chartZip"></canvas>
+
+                                        <div class="footer">
+
+                                            <hr>
+                                            <div class="stats">
+                                                <i class="fa fa-check"></i> Etude réalisée en partenariat avec M. Francis Faux, enseignant.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -271,6 +299,7 @@
     <script>
         var ctx = document.getElementById('myChart').getContext('2d');
         var label = [];
+        var titre = "CA par Produit en $ ${dateProcuct}"
         var ca = [];
         <c:forEach items="${productCA}" var="item" >
         label.push("${item.key}");
@@ -289,9 +318,9 @@
             data: {
                 labels: label,
                 datasets: [{
-                        label: "CA par Produit en $",
-                        backgroundColor: randomColorGenerator(),
-                        borderColor: randomColorGenerator(),
+                        label: "CA par Produit en $, ${dateProduct}.",
+                       backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
                         data: ca,
                     }]
             },
@@ -319,7 +348,7 @@
             data: {
                 labels: label,
                 datasets: [{
-                        label: "CA par zone Géographique en $",
+                        label: "CA par zone Géographique en $, ${dateGeo}",
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: ca,
@@ -349,7 +378,7 @@
             data: {
                 labels: label,
                 datasets: [{
-                        label: "CA par Client en $",
+                        label: "CA par Client en $, ${dateCli}",
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: ca,
@@ -373,13 +402,43 @@
         </c:forEach>
         var chart = new Chart(ctx, {
             // The type of chart we want to create
-            type: 'bar',
+            type: 'horizontalBar',
 
             // The data for our dataset
             data: {
                 labels: label,
                 datasets: [{
-                        label: "CA par catégorie d'article en $",
+                        label: "CA par catégorie d'article en $, ${dateProductCode}",
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: ca,
+                    }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    </script>
+    
+       <script>
+        var ctx = document.getElementById('chartZip').getContext('2d');
+        var label = [];
+        var ca = [];
+            <c:forEach items="${zipCA}" var="item" >
+                label.push("${item.key}");
+        </c:forEach>
+            <c:forEach items="${zipCA}" var="item" >
+                ca.push(${item.value});
+        </c:forEach>
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'horizontalBar',
+
+            // The data for our dataset
+            data: {
+                labels: label,
+                datasets: [{
+                        label: "CA par catégorie d'article en $, ${dateZip}",
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: ca,
