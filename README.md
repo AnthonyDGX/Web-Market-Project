@@ -25,7 +25,8 @@ Une fois connecté, l'application doit permettre au client l'édition complète 
 
 Pour l'administrateur :
 
-- L'administrateur s'authentifie en utilisant un login / password prédéfini dans l'application.
+- L'administrateur s'authentifie en utilisant un login / password prédéfini dans l'application : 
+  
     login : admin@admin
     password : admin
 
