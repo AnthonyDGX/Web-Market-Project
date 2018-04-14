@@ -26,6 +26,8 @@ Une fois connecté, l'application doit permettre au client l'édition complète 
 Pour l'administrateur :
 
 - L'administrateur s'authentifie en utilisant un login / password prédéfini dans l'application.
+    login : admin@admin
+    password : admin
 
 Une fois authentifié, l'administrateur a accès à une série de tableaux de bord graphiques qui lui permettent de visualiser des statistiques sur les commandes saisies :
 
