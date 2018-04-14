@@ -48,3 +48,21 @@ Le projet sera évalué par une présentation orale en groupe :
     Examen du code source
     Questions/Réponses collectives et individuelles
     "
+    
+- Voici la liste des utilisateurs de notre base de donnée, avec leur mdp et suivi de leur login :
+<pre>
+1 jumboeagle@example.com	
+2  www.new.example.com
+25	www.wrencomp.example.com	
+3	www.smallbill.example.com	
+36	www.bobhostcorp.example.com
+106	www.centralcomp.example.com	
+149	www.johnvalley.example.com	
+863	www.bignet.example.com	
+777	www.westv.example.com	
+753	www.parts@ford.example.com	
+722	www.bparts.example.com	
+409 www.oldmedia.example.com	
+410 www.nycompltd@repair.example.com
+
+</pre>
