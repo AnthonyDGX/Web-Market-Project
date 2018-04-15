@@ -119,6 +119,7 @@ public class AdminController extends HttpServlet {
         } catch (ParseException ex) {
             Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return;
     }
 
     /**
@@ -139,6 +140,7 @@ public class AdminController extends HttpServlet {
         } catch (ParseException ex) {
             Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return;
     }
 
     private void doLogout(HttpServletRequest request) {
