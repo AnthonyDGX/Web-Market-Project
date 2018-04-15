@@ -146,7 +146,8 @@ public class CustomerController extends HttpServlet{
 		
 
 		// Est-ce que l'utilisateur est connecté ?
-		
+		                                    request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
+
 	}
      
      @Override

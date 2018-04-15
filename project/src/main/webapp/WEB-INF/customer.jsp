@@ -294,10 +294,8 @@
 
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <footer class="footer">
+                                                
+                                                 <footer class="footer">
             <div class="container-fluid">
 
                 <p class="copyright pull-right">
@@ -305,7 +303,11 @@
                 </p>
             </div>
         </footer>
+            </div>
 
+        </div>
+
+       
 
     </body>
 
