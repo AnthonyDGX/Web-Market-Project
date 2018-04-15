@@ -121,7 +121,7 @@
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Solde de votre compte : </label>
-                                                    <input type="text" class="form-control" disabled placeholder="Company" value="${solde}">
+                                                    <input type="text" class="form-control" disabled placeholder="Company" value="${solde} $">
                                                 </div>
                                             </div>
                                             <form method='POST' action="customerController">
@@ -233,11 +233,12 @@
                                             <th>ID Client</th>
                                             <th>Numéro de commande</th>
                                             <th>Quantité</th>
+                                            <th>Modifier</th>
                                             <th>Prix Total</th>
                                             <th>Type de produit</th>
                                             <th>Date</th>
                                             <th>Effacer</th>
-                                            <th>Modifier</th>
+                                            
                                             </thead>
                                             <tbody>
                                                 <c:forEach var="comm" items="${commandes}">
@@ -254,6 +255,12 @@
                                                         <input name="quantityToEdit" id="${comm.QUANTITY}" type="text" class="validate" value ="${comm.QUANTITY}">
                                                         <input type="hidden" name="action" value="EDIT_COMMANDE">
                                                     </td>
+                                                    
+                                                     <td>
+                                                        <button type="submit" class="btn btn-info btn-fill pull-left">Edit <i class="fa fa-pencil"></i></button>
+
+                                                    </td>
+                                                </form>
                                                     <td >
                                                         ${comm.COST} $
                                                     </td>
@@ -263,18 +270,17 @@
                                                     <td >
                                                         ${comm.SHIPPING_DATE}
                                                     </td>
+                                                    <form method='POST' action="customerController">
                                                     <td>
-
-                                                        <a href="customerController?action=DELETE_COMMANDE&purchaseToDelete=${comm.ORDER_NUM}">Delete</a>
-                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                            <i class="fa fa-trash"></i>
+                                                        <input hidden name="purchaseToDelete" id="${comm.ORDER_NUM}" type="text" class="validate" value="${comm.ORDER_NUM}">
+                                                        <input type="hidden" name="action" value="DELETE_COMMANDE">
+                                                        <button type="submit" class="btn btn-info btn-fill pull-left">Delete <i class="fa fa-trash"></i></button>
+                                                           
                                                         </a>
                                                     </td>
-                                                    <td>
-                                                        <button type="submit" class="btn btn-info btn-fill pull-left">Edit <i class="fa fa-pencil"></i></button>
-
-                                                    </td>
-                                                </form>
+                                                    </form>
+                                                   
+                                             
                                                 </tr>
                                             </c:forEach> 
                                             </tbody>
