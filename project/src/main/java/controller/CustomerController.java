@@ -23,6 +23,7 @@ import model.Customer;
 import model.DAO;
 import model.DataSourceFactory;
 import model.DiscountCode;
+import model.Product;
 import model.PurchaseOrder;
 
 /**
@@ -63,7 +64,7 @@ public class CustomerController extends HttpServlet{
                         Customer c = new Customer();
                         c.setPassword(password);
                         
-			request.setAttribute("codes", viewCodes(request));		
+			session.setAttribute("codes", viewCodes(request));		
 			switch (action) {
 				
                                         
@@ -72,15 +73,20 @@ public class CustomerController extends HttpServlet{
                                     session.setAttribute("commandes", dao.customerCommandes(c));
                                     solde = dao.soldeClient(Integer.parseInt(password));
                                     session.setAttribute("solde", solde);
+                                    request.setAttribute("message", "Commande de "+quantite+" '"+request.getParameter("produit")+"'"+" réalisée.");
                                     request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
                                     break;
                                 
                                 case "DELETE_COMMANDE":
                                     try {
                                             dao.deleteCommande(Integer.parseInt(purchaseToDelete));
-                                            request.setAttribute("message", "Commande " + purchaseToDelete + " Supprimée");
+                                        
                                             session.setAttribute("commandes", dao.customerCommandes(c));
+                                            solde = dao.soldeClient(Integer.parseInt(password));
+                                            session.setAttribute("solde", solde);
+                                             request.setAttribute("message", "Commande " + purchaseToDelete + " Supprimée");
                                             request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
+
 														
 					} catch (SQLIntegrityConstraintViolationException e) {
 						request.setAttribute("message2", "Impossible de supprimer " +  purchaseToDelete + ", cette commande est utilisée.");
@@ -91,8 +97,16 @@ public class CustomerController extends HttpServlet{
                                     try {
                                             String quantityToEdit = request.getParameter("quantityToEdit");
                                             dao.editCommande(Integer.parseInt(purchaseToEdit), Integer.parseInt(quantityToEdit), Integer.parseInt(password) );
-                                            request.setAttribute("message", "Commande " + purchaseToEdit + " modifiée");
+                                            if (dao.editCommande(Integer.parseInt(purchaseToEdit), Integer.parseInt(quantityToEdit), Integer.parseInt(password) )){
+                                                request.setAttribute("message", "Commande " + purchaseToEdit + " modifiée");
+                                            }
+                                            else{
+                                                request.setAttribute("message", "Vous n'avez pas assez d'argent pour modifier la commande " + purchaseToEdit);
+                                            }
+                                            
                                             session.setAttribute("commandes", dao.customerCommandes(c));
+                                            solde = dao.soldeClient(Integer.parseInt(password));
+                                            session.setAttribute("solde", solde);
                                             request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
 														
 					} catch (SQLIntegrityConstraintViolationException e) {
@@ -106,11 +120,22 @@ public class CustomerController extends HttpServlet{
                                             dao.virement(Integer.parseInt(password), montant);
                                             solde = dao.soldeClient(Integer.parseInt(password));
                                             session.setAttribute("solde", solde);
+                                            request.setAttribute("message", "Virement de : "+ montant +"$ réalisé sur votre compte.");
                                             request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
                                         }
                                         catch (SQLIntegrityConstraintViolationException e) {
-						request.setAttribute("message", "Impossible de faire le virement ");
+						
 					}
+                                        break;
+                                        
+                                         case "SHOW_PRODUIT":
+                                             ArrayList<Product> listeProduit = dao.listProduct();
+                                             session.setAttribute("listeProduit", listeProduit);
+                                            request.getRequestDispatcher("WEB-INF/produits.jsp").forward(request, response);                                        
+                                        break;
+                                        
+                                         case "SHOW_CLIENT":          
+                                            request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);                                       
                                         break;
                                 
 			}
@@ -118,10 +143,11 @@ public class CustomerController extends HttpServlet{
 			Logger.getLogger("customerController").log(Level.SEVERE, "Action en erreur", ex);
 			request.setAttribute("message", ex.getMessage());
 		} 
-		request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
+		
 
 		// Est-ce que l'utilisateur est connecté ?
-		
+		                                    request.getRequestDispatcher("WEB-INF/customer.jsp").forward(request, response);
+
 	}
      
      @Override
