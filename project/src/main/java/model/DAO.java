@@ -30,7 +30,7 @@ public class DAO {
     /**
      * 
      * @param id du client
-     * @param montant de la somme à virer sue lc compte
+     * @param montant de la somme à virer sue le compte
      * @return 1 si l'opération s'est bien déroulée
      * @throws SQLException 
      */
@@ -440,6 +440,14 @@ public class DAO {
         return res;
     }
 
+    
+    /**
+     * 
+     * @param order_num qui est le numéro de la commande
+     * @return le nombre, plus précisement la quentité du prouit commandé
+     * @throws SQLException 
+     */
+    
     public int ancienneQuantite(int order_num) throws SQLException {
         int res = 0;
 
@@ -455,6 +463,13 @@ public class DAO {
         return res;
     }
 
+    /**
+     * 
+     * @param order_num qui est le numéro de la commande
+     * @return l'id du client qui passe la commande
+     * @throws SQLException 
+     */
+    
     public int CustomerIdByOrderNum(int order_num) throws SQLException {
         int res = 0;
 
@@ -470,6 +485,13 @@ public class DAO {
         return res;
     }
 
+    /**
+     * 
+     * @param order_num qui est le numéro de la commande
+     * @return l'affirmation de la comamande supprimée
+     * @throws SQLException 
+     */
+    
     public int deleteCommande(int order_num) throws SQLException {
         int result = 0;
         this.virement(this.CustomerIdByOrderNum(order_num), this.setPrix(this.ancienneQuantite(order_num), this.prodId(order_num), this.CustomerIdByOrderNum(order_num)));
@@ -483,6 +505,16 @@ public class DAO {
         return result;
     }
 
+    /**
+     * 
+     * @param order_num numéro de la commande
+     * @param quantity quantité du produit demandé
+     * @param customerID id du client
+     * @return affirmation de la modification de la commande si elle est possible,
+     * sinon return une impossibilité de d'augmenter la quantité si le client n'a pas assez d'arent sur son compte
+     * @throws SQLException 
+     */
+    
     public boolean editCommande(int order_num, int quantity, int customerID) throws SQLException {
         Boolean res = false;
         int oldQuantity = this.ancienneQuantite(order_num);
@@ -519,6 +551,13 @@ public class DAO {
         
     }
 
+    /**
+     * 
+     * @param order_num numéro de la commande 
+     * @return l'id du produit 
+     * @throws SQLException 
+     */
+    
     public int getProductIdByOrderNum(int order_num) throws SQLException {
         int result = 0;
         String sql = "SELECT PRODUCT_ID FROM PRODUCT "
@@ -561,6 +600,7 @@ public class DAO {
 	 * @return le nombre d'enregistrements supprimés (1 ou 0)
 	 * @throws java.sql.SQLException renvoyées par JDBC
 	 **/
+    
     public int deleteDiscountCode(String code) throws SQLException {
         int result = 0;
         String sql = "DELETE FROM DISCOUNT_CODE WHERE DISCOUNT_CODE = ?";
@@ -571,7 +611,14 @@ public class DAO {
         }
         return result;
     }
-
+    
+/**
+ * 
+ * @param email c'est l'email du client
+ * @return l'identifiant du client, cela permet de savoir si il a un compte sur le site par exemple
+ * @throws SQLException 
+ */
+    
     public Customer findCustomerID(String email) throws SQLException {
 
         // On va créer un nouveau Customer pour pouvoir récuperer ses informations
@@ -614,6 +661,12 @@ public class DAO {
         return c;
     }
 
+    /**
+     * 
+     * @return les informations concernants le client : son mail et son Id 
+     * @throws SQLException 
+     */
+    
     public String infoCustomer() throws SQLException {
         String ret = "";
         String sql = "SELECT EMAIL, CUSTOMER_ID FROM CUSTOMER";
@@ -631,6 +684,12 @@ public class DAO {
         return ret;
     }
 
+    /**
+     * 
+     * @param product_id l'identifiant du produit
+     * @return la description du produit 
+     * @throws SQLException 
+     */
     public String descProduct(int product_id) throws SQLException {
         String ret = "";
         String sql = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_ID = ?";
@@ -648,6 +707,14 @@ public class DAO {
     }
 
     // Partie Admin
+    
+    /**
+     * 
+     * @param product_id identifiant du produit 
+     * @return le prix du produit demandé
+     * @throws SQLException 
+     */
+    
     public double getCost(int product_id) throws SQLException {
         double result = 0;
         String sql = "SELECT PURCHASE_COST FROM PRODUCT WHERE PRODUCT_ID = ?";
@@ -663,6 +730,12 @@ public class DAO {
         return result;
     }
 
+    /**
+     * 
+     * @param id l'id du client 
+     * @return Nom du client 
+     * @throws SQLException 
+     */
     public String nameCustomer(int id) throws SQLException {
         String ret = "";
         String sql = "SELECT NAME FROM CUSTOMER WHERE CUSTOMER_ID = ?";
@@ -679,6 +752,13 @@ public class DAO {
         return ret;
     }
 
+    /**
+     * 
+     * @param deb date de début d'analyse
+     * @param fin date de fin de l'analyse
+     * @return le chiffre d'affaires effectué par la vente des produits (ordonné par produit)
+     * @throws SQLException 
+     */
     public Map<String, Double> chiffreAffaireByProduct(String deb, String fin) throws SQLException {
         Map<String, Double> ret = new HashMap<>();
         String sql = "SELECT PRODUCT_ID, SUM(QUANTITY) AS SALES FROM PURCHASE_ORDER"
@@ -720,6 +800,13 @@ public class DAO {
         return ret;
     }
 
+    /**
+     * 
+     * @param deb date de début de l'analyse
+     * @param fin date de fin de l'analyse
+     * @return le chiffre d'affaires effectué par client
+     * @throws SQLException 
+     */
     public Map<String, Double> chiffreAffaireByCustomer(String deb, String fin) throws SQLException {
         Map<String, Double> ret = new HashMap<>();
         String sql = "SELECT CUSTOMER_ID, PRODUCT_ID, QUANTITY FROM PURCHASE_ORDER"
@@ -766,6 +853,13 @@ public class DAO {
         return ret;
     }
 
+    /**
+     * 
+     * @param deb date de début d'analyse
+     * @param fin date de fin d'analyse 
+     * @return le chiffre d'affaires représenté par pays
+     * @throws SQLException 
+     */
     public Map<String, Double> chiffreAffaireByState(String deb, String fin) throws SQLException {
         Map<String, Double> ret = new HashMap<>();
         String sql = "SELECT PRODUCT_ID, CUSTOMER_ID, QUANTITY, STATE FROM PURCHASE_ORDER"
@@ -814,6 +908,13 @@ public class DAO {
         return ret;
     }
 
+    /**
+     * 
+     * @param deb date de début d'analyse
+     * @param fin date de fin d'analyse
+     * @return le chiffre d'affaires de l'entreprise effectué par rapport au produit (à leur code)
+     * @throws SQLException 
+     */
     public Map<String, Double> chiffreAffaireByProductCode(String deb, String fin) throws SQLException {
         Map<String, Double> ret = new HashMap<>();
         String sql = "SELECT PURCHASE_ORDER.PRODUCT_ID, QUANTITY, PRODUCT_CODE.DESCRIPTION FROM PURCHASE_ORDER"
@@ -864,6 +965,13 @@ public class DAO {
         return ret;
     }
 
+    /**
+     * 
+     * @param deb date de début d'analyse
+     * @param fin date de fin d'analyse
+     * @return le chiffre d'affaires de l'entreprise en fonction du ZIP
+     * @throws SQLException 
+     */
     public Map<String, Double> chiffreAffaireByZip(String deb, String fin) throws SQLException {
         Map<String, Double> ret = new HashMap<>();
         String sql = "SELECT PRODUCT_ID, CUSTOMER_ID, QUANTITY, ZIP FROM PURCHASE_ORDER"
