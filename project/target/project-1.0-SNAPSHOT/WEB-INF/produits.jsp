@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -247,15 +248,18 @@
                                                             ${p.productId}
                                                         </td>
                                                         <td>
-                                                            ${p.purchaseCost} $
+                                                            
+                                                            <fmt:setLocale value = "en_US"/>
+                                                            <fmt:formatNumber value = "${p.purchaseCost}" type = "currency"/>
                                                         </td>
                                                         <td >
                                                             ${p.description}
                                                         </td>
                                                         <td >
                                                             <c:forEach var="item" items="${codes}">
-
-                                                                ${(((100-item.rate) * p.purchaseCost)/100)} $ </p>
+                                                                <fmt:setLocale value = "en_US"/>
+                                                                <fmt:formatNumber value = "${(((100-item.rate) * p.purchaseCost)/100)}" type = "currency"/>
+                                                                
                                                             </c:forEach>
                                                         </td>
 
