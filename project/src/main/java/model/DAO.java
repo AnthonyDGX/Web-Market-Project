@@ -26,6 +26,14 @@ public class DAO {
     public DAO() {
         this.myDataSource = DataSourceFactory.getDataSource();
     }
+    
+    /**
+     * 
+     * @param id du client
+     * @param montant de la somme à virer sue lc compte
+     * @return 1 si l'opération s'est bien déroulée
+     * @throws SQLException 
+     */
 
     // entrer l'id d'un client est la somme que vous voulez verser sur son compte
     public int virement(int id, double montant) throws SQLException {
@@ -41,6 +49,12 @@ public class DAO {
 
         return ret;
     }
+    /**
+     * 
+     * @param id du client
+     * @return le solde du client (DREDIT_LIMIT)
+     * @throws SQLException 
+     */
 
     //metode qui recupere la solde presente sur le compte d'un client en renseignant son id
     public double soldeClient(int id) throws SQLException {
@@ -57,7 +71,13 @@ public class DAO {
         }
         return ret;
     }
-
+/**
+ * 
+ * @param id du client
+ * @param price somme à modifier
+ * @return 1 si la modification a bien été faite
+ * @throws SQLException 
+ */
     // méthode qui va mettre à jour la solde d'un client en prenant en compte son id et le prix de son achat
     public int updateSolde(int id, double price) throws SQLException {
         int ret = 0;
@@ -72,11 +92,14 @@ public class DAO {
         return ret;
     }
 
-    // futur méthode ayant pour but de rembourser le cilent qui supprime une commande
-    public int remboursement(int id, double price) throws SQLException {
-        int ret = 0;
-        return ret;
-    }
+    /**
+     * 
+     * @param id du client
+     * @param product_id qui est l'id du produit
+     * @param quantite du produit à acheter
+     * @return true si le client peut effectuer cet achat
+     * @throws SQLException 
+     */
 
     // Methode qui vériffie si le cliant a assez d'argent sur son compte pour poouvoir effectuer son achat
     public boolean checkAchatSolde(int id, int product_id, int quantite) throws SQLException {
@@ -89,6 +112,12 @@ public class DAO {
         return ret;
     }
 
+    /**
+     * 
+     * @param c qui est un customer
+     * @return une liste comprenant les discounts codes d'un customer
+     * @throws SQLException 
+     */
     // retournne le discount code d'un client en fonction de son id
     public List<DiscountCode> customerCodes(Customer c) throws SQLException {
         List<DiscountCode> result = new LinkedList<>();
@@ -113,6 +142,13 @@ public class DAO {
 
         return result;
     }
+    
+    /**
+     * 
+     * @param c qui est un customer
+     * @return la liste de tous les achats de ce client
+     * @throws SQLException 
+     */
 
     // methode qui retourne dans une liste la liste de tous les achats d'un client
     public List<PurchaseOrder> customerCommandes(Customer c) throws SQLException {
@@ -149,6 +185,11 @@ public class DAO {
 
         return result;
     }
+    /**
+     * 
+     * @return tous les codes de réductions des clients
+     * @throws SQLException 
+     */
 
     // Retourne tous les codes de promotions client
     public List<DiscountCode> allCodes() throws SQLException {
@@ -170,6 +211,12 @@ public class DAO {
         }
         return result;
     }
+    
+    /**
+     * 
+     * @return la liste de tous les produits que l'on peut acheter
+     * @throws SQLException 
+     */
 
     // Retourne une liste de string affichant les description des produits en stock
     public ArrayList<Product> listProduct() throws SQLException {
@@ -195,6 +242,13 @@ public class DAO {
         }
         return result;
     }
+    
+    /**
+     * 
+     * @param customer_id qui est l'id du customer
+     * @return la valeur du discount code de ce client/customer
+     * @throws SQLException 
+     */
 
     //retourne la valeur du code de reduction d'un client en fonction de son id
     public double valueOfDiscountCode(int customer_id) throws SQLException {
@@ -217,6 +271,14 @@ public class DAO {
         System.out.println("ma valeur est de  -----------------------" + ret);
         return ret;
     }
+    
+    /**
+     * 
+     * @param code que l'on veut créer
+     * @param rate la valeur de ce code
+     * @return 1 si l'opération a bien été réalisée
+     * @throws SQLException 
+     */
 
     // créer un dsicount code
     public int addDiscountCode(String code, float rate) throws SQLException {
@@ -230,7 +292,14 @@ public class DAO {
         }
         return result;
     }
-
+/**
+ * 
+ * @param customerID qui est l'id du client
+ * @param quantity qui est la quantite que l'on veut acheter d'objets
+ * @param product_id qui est l'id du produit que l'on veut acheter
+ * @return 1 si l'op"artion s'est bien réalisée, 0 sinon
+ * @throws SQLException 
+ */
     // methode permettant de passer une commande
     public int addCommande(int customerID, int quantity, int product_id) throws SQLException {
         int result = 0;
@@ -253,7 +322,17 @@ public class DAO {
 
         return result;
     }
+    
+    /**
+     * 
+     * @param quantite du produit
+     * @param product_id l'id du produit
+     * @param customer_id l'id du client
+     * @return le prix  de la commande
+     * @throws SQLException 
+     */
 
+    // cette méthode prend en compte la valeur des réductions des clients pour calculer le prix d'une commande
     public double setPrix(int quantite, int product_id, int customer_id) throws SQLException {
         double result = 0;
         String sql = "SELECT PURCHASE_COST FROM PRODUCT WHERE PRODUCT_ID = ?";
@@ -269,6 +348,11 @@ public class DAO {
         }
         return result;
     }
+    /**
+     * 
+     * @return un numéro de commande aléatoire qui n'est pas dans la liste pour créer une commande
+     * @throws SQLException 
+     */
 
     public int numeroCommande() throws SQLException {
         List<Integer> result = new ArrayList<>();
@@ -288,6 +372,12 @@ public class DAO {
         }
         return numAlea;
     }
+    
+    /**
+     * 
+     * @return tous les produits disponnbiles
+     * @throws SQLException 
+     */
 
     public ArrayList<String> allProduct() throws SQLException {
         ArrayList<String> result = new ArrayList<>();
@@ -303,6 +393,13 @@ public class DAO {
         }
         return result;
     }
+    
+    /**
+     * 
+     * @param des la description des produits
+     * @return l'id de ces produits
+     * @throws SQLException 
+     */
 
     public int numProduct(String des) throws SQLException {
         int result = 0;
@@ -320,6 +417,13 @@ public class DAO {
         System.out.println("Le produit est : " + result + "----------------------");
         return result;
     }
+    
+    /**
+     * 
+     * @param order_num qui est le numéro de commande 
+     * @return l'id du produit
+     * @throws SQLException 
+     */
 
     public int prodId(int order_num) throws SQLException {
         int res = 0;
