@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="en">
     <head>
@@ -262,7 +263,9 @@
                                                     </td>
                                                 </form>
                                                     <td >
-                                                        ${comm.COST} $
+                                                        <fmt:setLocale value = "en_US"/>
+                                                        <fmt:formatNumber value = "${comm.COST}" type = "currency"/>
+                                                        
                                                     </td>
                                                     <td >
                                                         ${comm.DESCRIPTION}
