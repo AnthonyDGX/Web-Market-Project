@@ -77,7 +77,20 @@ Le projet sera évalué par une présentation orale en groupe :
 REPARTITION DES RÔLES :
 
 Sophie et Gabrielle étaient en charge de réaliser le front de l'application. Elles avaient pour missions de : 
-    - réaliser une maquette
-    - choisir le framework CSS
-    - réaliser les maquettes en html/ccs/js
+    <ul>
+    <li> réaliser une maquette</li>
+    <li> choisir le framework CSS</li>
+    <li>réaliser les maquettes en html/ccs/js</li>
+    </ul>
 De son côté, Anthony était en charge de la mise en place de l'architecture MVC et a effectué toutes les relations entre la base de donnée et l'utilisateur.
+
+# Mode d'emploi
+
+Sur notre Web Market, vous pourrez donc vous identifier en tant que client et passer des commandes. Vos commandes pourrons être modifées ou supprimées. Vous pourrez en ajoutant tant que vous aurez assez d'argent sur votre compte.
+
+<br> Lorsque vous editez ou supprimez une commande, vous serez soit débité ou remboursé de la somme nécessaire.
+
+
+<strong>Côté Admin</strong>
+
+Ici vous pourrez visualiser toutes les statistiques de notre web market.
