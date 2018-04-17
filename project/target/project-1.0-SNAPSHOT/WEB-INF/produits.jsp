@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -60,14 +60,14 @@
 
                     <ul class="nav">
 
-                        <li class="active">
-                            <a href="#">
+                        <li >
+                            <a href="customerController?action=SHOW_CLIENT">
                                 <i class="pe-7s-user"></i>
                                 <p>Votre Profil</p>
                             </a>
                         </li>
 
-                        <li>
+                        <li class="active">
                             <a href="customerController?action=SHOW_PRODUIT">
                                 <i class="pe-7s-news-paper"></i>
                                 <p>Liste des Produits</p>
@@ -122,7 +122,7 @@
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Solde de votre compte : </label>
-                                                    <input type="text" class="form-control" disabled placeholder="Company" value="${solde} $">
+                                                    <input type="text" class="form-control" disabled placeholder="Company" value="${solde}">
                                                 </div>
                                             </div>
                                             <form method='POST' action="customerController">
@@ -186,7 +186,7 @@
                             <div class="col-md-4">
                                 <div class="card card-user">
                                     <div class="image">
-                                        <img class="banniere" src="http://www.tipux.com/files/gfx_m_gif/68d3/2317.gif" alt="..."/>
+                                        <img class="banniere" src="https://media.giphy.com/media/11p7VSL9W2AclW/giphy.gif" alt="..."/>
                                     </div>
                                     <div class="content">
                                         <div class="author">
@@ -197,6 +197,7 @@
 
                                                     <small>${userEmail}</small>
                                                 </h4>
+
                                             </a>
                                             <p class="description text-center"> "Le plein de fraîcheur <br>
                                                 et d'économies" <br>
@@ -225,67 +226,45 @@
                             <div class="col-md-12">
                                 <div class="card" >
                                     <div class="header">
-                                        <h4 class="title">Vos commandes</h4>
-                                        <p class="category">Ici vous pourrez modifier ou effacer vos commandes.</p>
+                                        <h4 class="title">Liste des produits en stock</h4>
+                                        <p class="category">Ici vous trouverez la liste des produits que vous pouvez acheter.</p>
                                     </div>
                                     <div class="content table-responsive table-full-width">
                                         <table class="table table-hover table-striped">
                                             <thead>
-                                            <th>ID Client</th>
-                                            <th>Numéro de commande</th>
-                                            <th>Quantité</th>
-                                            <th>Modifier</th>
-                                            <th>Prix Total</th>
+
+                                            <th>ID Produit</th>
+                                            <th>Prix </th>
                                             <th>Type de produit</th>
-                                            <th>Date</th>
-                                            <th>Effacer</th>
-                                            
+                                            <th>Prix avec votre réduction</th>
+
+
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="comm" items="${commandes}">
+                                                <c:forEach var="p" items="${listeProduit}">
                                                     <tr>
-                                                <form method='POST' action="customerController">
-                                                    <td >
-                                                        ${comm.CUSTOMER_ID}
-                                                    </td>
-                                                    <td>
-                                                        <input hidden name="purchaseToEdit" id="${comm.ORDER_NUM}" type="text" class="validate" value="${comm.ORDER_NUM}">
-                                                        <p name="purchaseToEdit" value="${comm.ORDER_NUM}">${comm.ORDER_NUM}</p>
-                                                    </td>
-                                                    <td >
-                                                        <input name="quantityToEdit" id="${comm.QUANTITY}" type="text" class="validate" value ="${comm.QUANTITY}">
-                                                        <input type="hidden" name="action" value="EDIT_COMMANDE">
-                                                    </td>
-                                                    
-                                                     <td>
-                                                        <button type="submit" class="btn btn-info btn-fill pull-left">Edit <i class="fa fa-pencil"></i></button>
 
-                                                    </td>
-                                                </form>
-                                                    <td >
-                                                        <fmt:setLocale value = "en_US"/>
-                                                        <fmt:formatNumber value = "${comm.COST}" type = "currency"/>
-                                                        
-                                                    </td>
-                                                    <td >
-                                                        ${comm.DESCRIPTION}
-                                                    </td>
-                                                    <td >
-                                                        ${comm.SHIPPING_DATE}
-                                                    </td>
-                                                    <form method='POST' action="customerController">
-                                                    <td>
-                                                        <input hidden name="purchaseToDelete" id="${comm.ORDER_NUM}" type="text" class="validate" value="${comm.ORDER_NUM}">
-                                                        <input type="hidden" name="action" value="DELETE_COMMANDE">
-                                                        <button type="submit" class="btn btn-info btn-fill pull-left">Delete <i class="fa fa-trash"></i></button>
-                                                           
-                                                        </a>
-                                                    </td>
-                                                    </form>
-                                                   
-                                             
-                                                </tr>
-                                            </c:forEach> 
+                                                        <td >
+                                                            ${p.productId}
+                                                        </td>
+                                                        <td>
+                                                            
+                                                            <fmt:setLocale value = "en_US"/>
+                                                            <fmt:formatNumber value = "${p.purchaseCost}" type = "currency"/>
+                                                        </td>
+                                                        <td >
+                                                            ${p.description}
+                                                        </td>
+                                                        <td >
+                                                            <c:forEach var="item" items="${codes}">
+                                                                <fmt:setLocale value = "en_US"/>
+                                                                <fmt:formatNumber value = "${(((100-item.rate) * p.purchaseCost)/100)}" type = "currency"/>
+                                                                
+                                                            </c:forEach>
+                                                        </td>
+
+                                                    </tr>
+                                                </c:forEach> 
                                             </tbody>
                                         </table>
 
@@ -296,21 +275,20 @@
 
 
                     </div>
+
+
                 </div>
-                                                
-                                                 <footer class="footer">
-            <div class="container-fluid">
+                <footer class="footer">
+                    <div class="container-fluid">
 
-                <p class="copyright pull-right">
-                    &copy;<a href="#">Promotion 2020</a>, made with <i data-v-a2425572="" class="fa fa-heart" style="color: rgb(233, 30, 99);"></i> by Sophie Peltier, Gabrielle Aussel & Anthony Dagneaux
-                </p>
+                        <p class="copyright pull-right">
+                            &copy;<a href="#">Promotion 2020</a>, made with <i data-v-a2425572="" class="fa fa-heart" style="color: rgb(233, 30, 99);"></i> by Sophie Peltier, Gabrielle Aussel & Anthony Dagneaux
+                        </p>
+                    </div>
+                </footer>  
             </div>
-        </footer>
-            </div>
 
-        </div>
 
-       
 
     </body>
 

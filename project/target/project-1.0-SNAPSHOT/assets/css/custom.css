@@ -20,3 +20,7 @@ and open the template in the editor.
 .nav-back{
     background-color: rgba(229,115,115,0.5);
 }
+
+.banniere {
+    margin-top: -25px;
+}
