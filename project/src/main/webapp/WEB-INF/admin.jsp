@@ -52,7 +52,7 @@
 
         <div class="wrapper">
             <div class="sidebar" data-color="soso" data-image="assets/img/sidebar-4.jpg">
-
+                
                 <!--
             
                     Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
@@ -62,6 +62,13 @@
 
                 <div class="sidebar-wrapper">
                     <div class="logo">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img class="banniere" src="https://media.giphy.com/media/11TyfGbDbBv4be/giphy.gif" alt="..."/>
+                            </div>
+                        </div>
+                        
+                       
                         <a href="#" class="simple-text">
                             Compte Administrateur
                         </a>
@@ -181,18 +188,18 @@
 
                                             <hr>
                                             <div class="stats">
-                                                <i class="fa fa-check"></i> Etude réalisée en partenariat avec M. Francis Faux, enseignant.
+                                                <i class="fa fa-check"></i> Etude réalisée en partenariat avec M. Villany, enseignant.
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-6">
                                 <div class="card ">
                                     <div class="header">
                                         <h4 class="title">Chiffre d'affaire par Catégorie d'article</h4>
-                                        <p class="category">Qui est le plus gros acheteur compulsif ?</p>
+                                        <p class="category">Quel produit plaît le plus à Jasmine Ghozali ?</p>
                                         <form method='POST' action="AdminController">
                                             <input type="date" class="choixdate" name="date_debut_cat">
                                             <input type="date" class="choixdate" name="date_fin_cat">
@@ -213,15 +220,15 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
-                        
+
                         <div class="row">
-                             <div class="col-md-6">
+                            <div class="col-md-6">
                                 <div class="card ">
                                     <div class="header">
-                                        <h4 class="title">Chiffre d'affaire par ZIP (zone géographique des MICRO-MARKET)</h4>
-                                        <p class="category">Qui est le plus gros acheteur compulsif ?</p>
+                                        <h4 class="title">Chiffre d'affaire par ZIP (Code postal)</h4>
+                                        <p class="category">Quel "Plan d'Amélioration du Découpage en Zone" possède le meilleur CA ?</p>
                                         <form method='POST' action="AdminController">
                                             <input type="date" class="choixdate" name="date_debut_zip">
                                             <input type="date" class="choixdate" name="date_fin_zip">
@@ -236,7 +243,7 @@
 
                                             <hr>
                                             <div class="stats">
-                                                <i class="fa fa-check"></i> Etude réalisée en partenariat avec M. Francis Faux, enseignant.
+                                                <i class="fa fa-check"></i> Etude réalisée en partenariat avec M. Regner, enseignant.
                                             </div>
                                         </div>
                                     </div>
@@ -287,7 +294,7 @@
             demo.initChartist();
 
             $.notify({
-                icon: 'pe-7s-gift',
+                icon: 'pe-7s-music',
                 message: "Bienvenue sur votre super Web Market ${userName}! Réalisé par Soso, Gaby et Antho."
 
             }, {
@@ -320,7 +327,7 @@
                 labels: label,
                 datasets: [{
                         label: "CA par Produit en $, ${dateProduct}.",
-                       backgroundColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: ca,
                     }]
@@ -335,11 +342,11 @@
         var ctx = document.getElementById('chartGeo').getContext('2d');
         var label = [];
         var ca = [];
-            <c:forEach items="${geoCA}" var="item" >
+        <c:forEach items="${geoCA}" var="item" >
         label.push("${item.key}");
         </c:forEach>
-            <c:forEach items="${geoCA}" var="item" >
-             ca.push(${item.value});
+        <c:forEach items="${geoCA}" var="item" >
+        ca.push(${item.value});
         </c:forEach>
         var chart = new Chart(ctx, {
             // The type of chart we want to create
@@ -365,10 +372,10 @@
         var ctx = document.getElementById('chartCli').getContext('2d');
         var label = [];
         var ca = [];
-            <c:forEach items="${cliCA}" var="item" >
+        <c:forEach items="${cliCA}" var="item" >
         label.push("${item.key}");
         </c:forEach>
-            <c:forEach items="${cliCA}" var="item" >
+        <c:forEach items="${cliCA}" var="item" >
         ca.push(${item.value});
         </c:forEach>
         var chart = new Chart(ctx, {
@@ -390,16 +397,16 @@
             options: {}
         });
     </script>
-    
+
     <script>
         var ctx = document.getElementById('chartCat').getContext('2d');
         var label = [];
         var ca = [];
-            <c:forEach items="${productCodeCA}" var="item" >
-                label.push("${item.key}");
+        <c:forEach items="${productCodeCA}" var="item" >
+        label.push("${item.key}");
         </c:forEach>
-            <c:forEach items="${productCodeCA}" var="item" >
-                ca.push(${item.value});
+        <c:forEach items="${productCodeCA}" var="item" >
+        ca.push(${item.value});
         </c:forEach>
         var chart = new Chart(ctx, {
             // The type of chart we want to create
@@ -420,16 +427,16 @@
             options: {}
         });
     </script>
-    
-       <script>
+
+    <script>
         var ctx = document.getElementById('chartZip').getContext('2d');
         var label = [];
         var ca = [];
-            <c:forEach items="${zipCA}" var="item" >
-                label.push("${item.key}");
+        <c:forEach items="${zipCA}" var="item" >
+        label.push("${item.key}");
         </c:forEach>
-            <c:forEach items="${zipCA}" var="item" >
-                ca.push(${item.value});
+        <c:forEach items="${zipCA}" var="item" >
+        ca.push(${item.value});
         </c:forEach>
         var chart = new Chart(ctx, {
             // The type of chart we want to create
@@ -439,7 +446,7 @@
             data: {
                 labels: label,
                 datasets: [{
-                        label: "CA par catégorie d'article en $, ${dateZip}",
+                           label: "CA par catégorie d'article en $, ${dateZip}",
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: ca,

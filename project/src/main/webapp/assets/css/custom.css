@@ -24,3 +24,17 @@ and open the template in the editor.
 .banniere {
     margin-top: -25px;
 }
+
+.rond{
+    border-radius: 50%;
+}
+
+.card-custom{
+    background-color: transparent!important;
+    border-color: transparent!important;
+    box-shadow:  0 0px 0px rgba(0, 0, 0, 0.05), 0 0 0 0px rgba(63, 63, 68, 0.1);
+}
+
+.img-responsive .centree {
+ margin: 0 auto!important;
+}

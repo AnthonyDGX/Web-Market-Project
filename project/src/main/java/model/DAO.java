@@ -40,13 +40,12 @@ public class DAO {
         int ret = 0;
         String sql = "UPDATE CUSTOMER SET CREDIT_LIMIT = ? WHERE CUSTOMER_ID = ?";
         try (
-                Connection connection = myDataSource.getConnection();
-                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, (int) (soldeClient(id) + montant));
             stmt.setInt(2, id);
             ret = stmt.executeUpdate();
-        }
-
+            }
         return ret;
     }
     /**
@@ -462,6 +461,29 @@ public class DAO {
         }
         return res;
     }
+    
+    
+     /**
+     * 
+     * @param order_num qui est le numéro de la commande
+     * @return le nombre, plus précisement la quentité du prouit commandé
+     * @throws SQLException 
+     */
+    
+    public int currentQuantite(int order_num) throws SQLException {
+        int res = 0;
+
+        String sql = "SELECT QUANTITY FROM PURCHASE_ORDER WHERE ORDER_NUM = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, order_num);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                res = rs.getInt("QUANTITY");
+            }
+        }
+        return res;
+    }
 
     /**
      * 
@@ -517,6 +539,7 @@ public class DAO {
     
     public boolean editCommande(int order_num, int quantity, int customerID) throws SQLException {
         Boolean res = false;
+        System.out.println("____________________________________________________________"+ quantity);
         int oldQuantity = this.ancienneQuantite(order_num);
         if (oldQuantity >= quantity) {
             this.virement(this.CustomerIdByOrderNum(order_num), this.setPrix(oldQuantity - quantity, this.prodId(order_num), this.CustomerIdByOrderNum(order_num)));
@@ -532,8 +555,10 @@ public class DAO {
             }
         } else {
             int diff = quantity - oldQuantity;
+            System.out.println(" ouai souais ouais ouais____________________________________________________________"+this.setPrix(oldQuantity - quantity, this.prodId(order_num), this.CustomerIdByOrderNum(order_num)));
+
             if (this.checkAchatSolde(customerID, this.prodId(order_num), diff)) {
-                this.updateSolde(customerID, setPrix(quantity, this.prodId(order_num), customerID));
+                this.updateSolde(customerID, setPrix(diff, this.prodId(order_num), customerID));
                 String sql = "UPDATE PURCHASE_ORDER SET QUANTITY = ? WHERE ORDER_NUM = ?";
                 try (Connection connection = myDataSource.getConnection();
                         PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -857,7 +882,7 @@ public class DAO {
      * 
      * @param deb date de début d'analyse
      * @param fin date de fin d'analyse 
-     * @return le chiffre d'affaires représenté par pays
+     * @return le chiffre d'affaires représenté par état
      * @throws SQLException 
      */
     public Map<String, Double> chiffreAffaireByState(String deb, String fin) throws SQLException {
@@ -969,7 +994,7 @@ public class DAO {
      * 
      * @param deb date de début d'analyse
      * @param fin date de fin d'analyse
-     * @return le chiffre d'affaires de l'entreprise en fonction du ZIP
+     * @return le chiffre d'affaires de l'entreprise en fonction du code postal
      * @throws SQLException 
      */
     public Map<String, Double> chiffreAffaireByZip(String deb, String fin) throws SQLException {

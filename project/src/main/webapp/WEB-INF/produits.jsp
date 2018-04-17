@@ -122,7 +122,8 @@
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Solde de votre compte : </label>
-                                                    <input type="text" class="form-control" disabled placeholder="Company" value="${solde}">
+                                                    <fmt:setLocale value = "en_US"/>
+                                                    <input type="text" class="form-control" disabled placeholder="Company" value="<fmt:formatNumber value = "${solde}" type = "currency"/> ">
                                                 </div>
                                             </div>
                                             <form method='POST' action="customerController">
